@@ -137,6 +137,7 @@ namespace Vista
                         if (response.IsSuccessStatusCode)
                         {
                             var rta = await response.Content.ReadAsStringAsync();
+                            //provedorSQL.CambiarEstadoColppy(proveedor.parameters.NombreFantasia); //Cambia el estado de colppy a 1 en la base de datos
                             MessageBox.Show(rta);
                         }
                         else
@@ -172,6 +173,7 @@ namespace Vista
                         if (response.IsSuccessStatusCode)
                         {
                             var rta = await response.Content.ReadAsStringAsync();
+                            //ClienteSQL.CambiarEstadoColppy(cliente.parameters.info_general.NombreFantasia);
                             
                             MessageBox.Show(rta + "\n\n" + aux);
                         }
@@ -198,21 +200,19 @@ namespace Vista
             {
                 int i = this.listadoClientes.Rows.Add();
 
-                //this.listadoClientes.Rows[i].Cells[0].Value = cliente.parameters.info_general.idCliente;
-                this.listadoClientes.Rows[i].Cells[1].Value = cliente.parameters.info_general.idEmpresa;
-                this.listadoClientes.Rows[i].Cells[2].Value = cliente.parameters.info_general.NombreFantasia;
-                this.listadoClientes.Rows[i].Cells[3].Value = cliente.parameters.info_general.RazonSocial;
-                this.listadoClientes.Rows[i].Cells[4].Value = cliente.parameters.info_general.CUIT;
-                this.listadoClientes.Rows[i].Cells[5].Value = cliente.parameters.info_general.dni;
-                this.listadoClientes.Rows[i].Cells[6].Value = cliente.parameters.info_general.DirPostal;
-                this.listadoClientes.Rows[i].Cells[7].Value = cliente.parameters.info_general.DirPostalCiudad;
-                this.listadoClientes.Rows[i].Cells[8].Value = cliente.parameters.info_general.DirPostalCodigoPostal;
-                this.listadoClientes.Rows[i].Cells[9].Value = cliente.parameters.info_general.DirPostalProvincia;
-                this.listadoClientes.Rows[i].Cells[10].Value = cliente.parameters.info_general.DirPostalPais;
-                this.listadoClientes.Rows[i].Cells[11].Value = cliente.parameters.info_general.Telefono;
-                this.listadoClientes.Rows[i].Cells[12].Value = cliente.parameters.info_general.Email;
-                this.listadoClientes.Rows[i].Cells[13].Value = cliente.parameters.info_otra.Activo;
-                this.listadoClientes.Rows[i].Cells[14].Value = cliente.parameters.info_otra.FechaAlta;
+                this.listadoClientes.Rows[i].Cells[0].Value = cliente.parameters.info_general.NombreFantasia;
+                this.listadoClientes.Rows[i].Cells[1].Value = cliente.parameters.info_general.RazonSocial;
+                this.listadoClientes.Rows[i].Cells[2].Value = cliente.parameters.info_general.CUIT;
+                this.listadoClientes.Rows[i].Cells[3].Value = cliente.parameters.info_general.dni;
+                this.listadoClientes.Rows[i].Cells[4].Value = cliente.parameters.info_general.DirPostal;
+                this.listadoClientes.Rows[i].Cells[5].Value = cliente.parameters.info_general.DirPostalCiudad;
+                this.listadoClientes.Rows[i].Cells[6].Value = cliente.parameters.info_general.DirPostalCodigoPostal;
+                this.listadoClientes.Rows[i].Cells[7].Value = cliente.parameters.info_general.DirPostalProvincia;
+                this.listadoClientes.Rows[i].Cells[8].Value = cliente.parameters.info_general.DirPostalPais;
+                this.listadoClientes.Rows[i].Cells[9].Value = cliente.parameters.info_general.Telefono;
+                this.listadoClientes.Rows[i].Cells[10].Value = cliente.parameters.info_general.Email;
+                this.listadoClientes.Rows[i].Cells[11].Value = cliente.parameters.info_otra.Activo;
+                this.listadoClientes.Rows[i].Cells[12].Value = cliente.parameters.info_otra.FechaAlta;
             }
         }
         private void CargarProveedores(List<Proveedor> lista)
@@ -288,6 +288,13 @@ namespace Vista
                     listadoProveedores.Hide();
                     break;
             }
+        }
+
+        private void btnCargarTodos_Click(object sender, EventArgs e)
+        {
+            AgregarClientes();
+            AgregarProductos();
+            AgregarProveedores();
         }
     }
 

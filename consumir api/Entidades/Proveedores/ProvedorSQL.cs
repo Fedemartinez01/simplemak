@@ -28,7 +28,7 @@ namespace Entidades.Proveedores
         }
         public List<Proveedor> LeerBaseDeDatos()
         {
-            List<Proveedor> proveedores= new List<Proveedor>();
+            List<Proveedor> proveedores = new List<Proveedor>();
             try
             {
                 sqlConnection.Open();
@@ -85,5 +85,36 @@ namespace Entidades.Proveedores
                 sqlConnection.Close();
             }
         }
-    }
+        public void CambiarEstadoColppy(string NombreFantasia)
+        {
+            var isOk = 0;
+            try
+            {
+                sqlConnection.Open();
+                Console.WriteLine("--- Conexion abierta ---");
+
+                sqlCommand.CommandText = $"UPDATE Providers SET IsOnColppy = 1 where BusinessName like @NombreFantasia";
+                sqlCommand.Parameters.AddWithValue("@NombreFantasia", NombreFantasia);
+                isOk = sqlCommand.ExecuteNonQuery();
+
+                if (isOk == 1)
+                {
+                    Console.WriteLine("OK");
+                }
+                else
+                {
+                    Console.WriteLine("Error");
+                }
+
+            }
+            catch 
+            {
+                Console.WriteLine("Error");
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+        }
+    } 
 }

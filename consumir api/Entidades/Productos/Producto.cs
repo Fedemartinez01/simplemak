@@ -16,19 +16,30 @@ namespace Entidades.Productos
 
 
         public int idEmpresa { get; set; }
-        public string codigo{ get; set; }
-        public string descripcion{ get; set; }
-        public string detalle{ get; set; }//observation
-        public decimal minimo { get; set; }//minimun
-        public string ultimoPrecioCompra{ get; set; }//cost?
+        public string codigo{ get; set; }//Code
+        public string descripcion{ get; set; }//Description
+        public string detalle{ get; set; }//Observation
+        public decimal minimo { get; set; }//Minimun
+        public string ultimoPrecioCompra{ get; set; }//Cost?
         public decimal precioVenta{ get; set; }//
         public string ctaInventario { get; set; }//
         public string ctaCostoVentas { get; set; }//
         public string ctaIngresoVentas { get; set; }//
         public string iva { get; set; } //21
-        public string tipoItem { get; set; }//
+        public string tipoItem { get; set; }//"P"
         public string unidadMedida { get; set; }//UnitMeasures
         public string comentarioFactura { get; set; }
+
+        #endregion
+        #region Constructor
+
+        Producto()
+        {
+            auth = new auth { usuario = "ntraficante@gmail.com", password = "e03c714818c4d45a033b467fa7b76797" };
+
+            service = new service { provision = "Cliente", operacion = "alta_cliente" };
+        }
+
 
         #endregion
     }

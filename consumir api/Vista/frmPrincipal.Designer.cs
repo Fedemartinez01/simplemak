@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.listadoClientes = new System.Windows.Forms.DataGridView();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idEmpresa = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nombreFantasia = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.razonSocial = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cuit = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -73,8 +71,11 @@
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn26 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.condicionIVA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnCargarTodos = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.listadoClientes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.listadoProveedores)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // listadoClientes
@@ -89,10 +90,8 @@
             this.listadoClientes.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders;
             this.listadoClientes.BackgroundColor = System.Drawing.Color.White;
             this.listadoClientes.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedHorizontal;
-            this.listadoClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.listadoClientes.ColumnHeadersHeight = 44;
             this.listadoClientes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.id,
-            this.idEmpresa,
             this.nombreFantasia,
             this.razonSocial,
             this.cuit,
@@ -115,20 +114,6 @@
             this.listadoClientes.RowTemplate.Height = 25;
             this.listadoClientes.Size = new System.Drawing.Size(1279, 454);
             this.listadoClientes.TabIndex = 3;
-            // 
-            // id
-            // 
-            this.id.HeaderText = "ID";
-            this.id.Name = "id";
-            this.id.ReadOnly = true;
-            this.id.Width = 51;
-            // 
-            // idEmpresa
-            // 
-            this.idEmpresa.HeaderText = "IDEmpresa";
-            this.idEmpresa.Name = "idEmpresa";
-            this.idEmpresa.ReadOnly = true;
-            this.idEmpresa.Width = 114;
             // 
             // nombreFantasia
             // 
@@ -223,6 +208,7 @@
             // 
             // btnCargarClientes
             // 
+            this.btnCargarClientes.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnCargarClientes.BackColor = System.Drawing.Color.White;
             this.btnCargarClientes.Location = new System.Drawing.Point(16, 521);
             this.btnCargarClientes.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -235,14 +221,14 @@
             // 
             // cmbVistaListado
             // 
-            this.cmbVistaListado.BackColor = System.Drawing.Color.White;
+            this.cmbVistaListado.BackColor = System.Drawing.Color.WhiteSmoke;
             this.cmbVistaListado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbVistaListado.FormattingEnabled = true;
             this.cmbVistaListado.Items.AddRange(new object[] {
             "Clientes",
             "Proveedores",
             "Productos"});
-            this.cmbVistaListado.Location = new System.Drawing.Point(66, 14);
+            this.cmbVistaListado.Location = new System.Drawing.Point(364, 20);
             this.cmbVistaListado.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmbVistaListado.Name = "cmbVistaListado";
             this.cmbVistaListado.Size = new System.Drawing.Size(155, 26);
@@ -252,7 +238,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 18);
+            this.label1.Location = new System.Drawing.Point(323, 23);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 18);
             this.label1.TabIndex = 9;
@@ -260,8 +246,9 @@
             // 
             // btnCargarProductos
             // 
+            this.btnCargarProductos.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnCargarProductos.BackColor = System.Drawing.Color.White;
-            this.btnCargarProductos.Location = new System.Drawing.Point(288, 521);
+            this.btnCargarProductos.Location = new System.Drawing.Point(297, 520);
             this.btnCargarProductos.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCargarProductos.Name = "btnCargarProductos";
             this.btnCargarProductos.Size = new System.Drawing.Size(182, 58);
@@ -271,8 +258,9 @@
             // 
             // btnCargarProveedores
             // 
+            this.btnCargarProveedores.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnCargarProveedores.BackColor = System.Drawing.Color.White;
-            this.btnCargarProveedores.Location = new System.Drawing.Point(559, 521);
+            this.btnCargarProveedores.Location = new System.Drawing.Point(668, 521);
             this.btnCargarProveedores.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCargarProveedores.Name = "btnCargarProveedores";
             this.btnCargarProveedores.Size = new System.Drawing.Size(182, 58);
@@ -365,7 +353,7 @@
             this.listadoProveedores.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders;
             this.listadoProveedores.BackgroundColor = System.Drawing.Color.White;
             this.listadoProveedores.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedHorizontal;
-            this.listadoProveedores.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.listadoProveedores.ColumnHeadersHeight = 44;
             this.listadoProveedores.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn15,
             this.dataGridViewTextBoxColumn16,
@@ -465,12 +453,38 @@
             this.condicionIVA.ReadOnly = true;
             this.condicionIVA.Width = 137;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::Vista.Properties.Resources.logo;
+            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(305, 39);
+            this.pictureBox1.TabIndex = 13;
+            this.pictureBox1.TabStop = false;
+            // 
+            // btnCargarTodos
+            // 
+            this.btnCargarTodos.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnCargarTodos.BackColor = System.Drawing.Color.White;
+            this.btnCargarTodos.Location = new System.Drawing.Point(980, 520);
+            this.btnCargarTodos.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btnCargarTodos.Name = "btnCargarTodos";
+            this.btnCargarTodos.Size = new System.Drawing.Size(182, 58);
+            this.btnCargarTodos.TabIndex = 14;
+            this.btnCargarTodos.Text = "CARGAR TODOS";
+            this.btnCargarTodos.UseVisualStyleBackColor = false;
+            this.btnCargarTodos.Click += new System.EventHandler(this.btnCargarTodos_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.BackgroundImage = global::Vista.Properties.Resources.logo;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(1311, 582);
+            this.Controls.Add(this.btnCargarTodos);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.listadoProveedores);
             this.Controls.Add(this.btnCargarProveedores);
             this.Controls.Add(this.btnCargarProductos);
@@ -478,6 +492,7 @@
             this.Controls.Add(this.cmbVistaListado);
             this.Controls.Add(this.btnCargarClientes);
             this.Controls.Add(this.listadoClientes);
+            this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Monospac821 BT", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "frmPrincipal";
@@ -487,6 +502,7 @@
             this.TextChanged += new System.EventHandler(this.CambioListado);
             ((System.ComponentModel.ISupportInitialize)(this.listadoClientes)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.listadoProveedores)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -494,21 +510,6 @@
 
         #endregion
         private DataGridView listadoClientes;
-        private DataGridViewTextBoxColumn id;
-        private DataGridViewTextBoxColumn idEmpresa;
-        private DataGridViewTextBoxColumn nombreFantasia;
-        private DataGridViewTextBoxColumn razonSocial;
-        private DataGridViewTextBoxColumn cuit;
-        private DataGridViewTextBoxColumn dni;
-        private DataGridViewTextBoxColumn direccion;
-        private DataGridViewTextBoxColumn ciudad;
-        private DataGridViewTextBoxColumn codigoPostal;
-        private DataGridViewTextBoxColumn provincia;
-        private DataGridViewTextBoxColumn pais;
-        private DataGridViewTextBoxColumn telefono;
-        private DataGridViewTextBoxColumn email;
-        private DataGridViewTextBoxColumn activo;
-        private DataGridViewTextBoxColumn fechaAlta;
         private Button btnCargarClientes;
         private ComboBox cmbVistaListado;
         private Label label1;
@@ -538,5 +539,20 @@
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn26;
         private DataGridViewTextBoxColumn condicionIVA;
+        private PictureBox pictureBox1;
+        private Button btnCargarTodos;
+        private DataGridViewTextBoxColumn nombreFantasia;
+        private DataGridViewTextBoxColumn razonSocial;
+        private DataGridViewTextBoxColumn cuit;
+        private DataGridViewTextBoxColumn dni;
+        private DataGridViewTextBoxColumn direccion;
+        private DataGridViewTextBoxColumn ciudad;
+        private DataGridViewTextBoxColumn codigoPostal;
+        private DataGridViewTextBoxColumn provincia;
+        private DataGridViewTextBoxColumn pais;
+        private DataGridViewTextBoxColumn telefono;
+        private DataGridViewTextBoxColumn email;
+        private DataGridViewTextBoxColumn activo;
+        private DataGridViewTextBoxColumn fechaAlta;
     }
 }

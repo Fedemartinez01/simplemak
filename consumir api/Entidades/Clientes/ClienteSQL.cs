@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -40,7 +41,7 @@ namespace Entidades.Clientes
                 sqlConnection.Open();
                 Console.WriteLine("--- Conexion abierta ---");
 
-                sqlCommand.CommandText = "\r\nselect c.Id, c.BusinessName, c.BusinessName, d.Description, c.DocumentNumber, c.Address, \r\nci.Name, c.PostalCode, st.Name, co.Denomination, c.CellPhoneNumber, c.Email, c.IsActive, c.CreatedOn\r\nfrom Clients c\r\nleft join DocumentTypes d\r\non c.DocumentTypeId = d.Id\r\nleft join Cities ci\r\non c.CityId = ci.Id\r\nleft join States st\r\non c.StateId = st.Id\r\nleft join Countries co\r\non c.CountryId = co.Id where c.IsOnColppy = 0";
+                sqlCommand.CommandText = "select c.Id, c.BusinessName, c.BusinessName, d.Description, c.DocumentNumber, c.Address,  ci.Name, c.PostalCode, st.Name, co.Denomination, c.CellPhoneNumber, c.Email, c.IsActive, c.CreatedOn, c.IsOnColppy from Clients c left join DocumentTypes d on c.DocumentTypeId = d.Id left join Cities ci on c.CityId = ci.Id left join States st on c.StateId = st.Id left join Countries co on c.CountryId = co.Id";
 
                 using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
                 {
@@ -50,6 +51,7 @@ namespace Entidades.Clientes
                         string TipoDocumento = dataReader["Description"].ToString();
                         string NumeroDocumento = dataReader["DocumentNumber"].ToString();
                         string Pais = dataReader["Denomination"].ToString();
+                        string IsOnColppy = dataReader["IsOnColppy"].ToString();
 
                         if (dataReader["IsActive"].ToString() == "True")
                         {
@@ -58,6 +60,7 @@ namespace Entidades.Clientes
 
                         try
                         {
+                            
                            Cliente cliente = new Cliente(
                            dataReader["BusinessName"].ToString(),
                            dataReader["BusinessName"].ToString(),
@@ -73,22 +76,8 @@ namespace Entidades.Clientes
                            isActive,
                           string.Empty
                             );
-
-                            if(NumeroDocumento != String.Empty)
-                            {
-                                if(TipoDocumento == "CUIT")
-                                {
-                                    cliente.parameters.info_general.CUIT = NumeroDocumento;
-                                }
-                                else 
-                                {
-                                    cliente.parameters.info_general.dni = NumeroDocumento;
-                                }
-                            }
-                            else
-                            {
-                                cliente.AsignarCUITGenerico(Pais);
-                            }
+                            cliente.AsignarDocumentNumber(TipoDocumento, NumeroDocumento);
+                            cliente.DefinirOperacionAltaOEditar(IsOnColppy);
 
                             clientes.Add(cliente);
                                 
@@ -112,6 +101,43 @@ namespace Entidades.Clientes
                 sqlConnection.Close();
             }
         }
+
+        /// <summary>
+        /// Cuando el cliende es dado de alta, se cambia el estado de colppy a 1 en la base de datos
+        /// </summary>
+        /// <param name="NombreFantasia"></param>
+        public void CambiarEstadoColppy(string NombreFantasia)
+        {
+            var isOk = 0;
+            try
+            {
+                sqlConnection.Open();
+                Console.WriteLine("--- Conexion abierta ---");
+
+                sqlCommand.CommandText = $"UPDATE Clients SET IsOnColppy = 1 where BusinessName like @NombreFantasia";
+                sqlCommand.Parameters.AddWithValue("@NombreFantasia", NombreFantasia);
+                isOk = sqlCommand.ExecuteNonQuery();
+
+                if (isOk == 1)
+                {
+                    Console.WriteLine("OK");
+                }
+                else
+                {
+                    Console.WriteLine("Error");
+                }
+
+            }
+            catch
+            {
+                Console.WriteLine("Error");
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+        }
+
 
         #endregion
     }
