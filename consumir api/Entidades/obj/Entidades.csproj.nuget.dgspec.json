@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Federico\\Desktop\\Soluciones visual\\SimpleMAK\\consumir api\\Entidades\\Entidades.csproj": {}
+    "C:\\Users\\natal\\Source\\repos\\colppy\\consumir api\\Entidades\\Entidades.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Federico\\Desktop\\Soluciones visual\\SimpleMAK\\consumir api\\Entidades\\Entidades.csproj": {
+    "C:\\Users\\natal\\Source\\repos\\colppy\\consumir api\\Entidades\\Entidades.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Federico\\Desktop\\Soluciones visual\\SimpleMAK\\consumir api\\Entidades\\Entidades.csproj",
+        "projectUniqueName": "C:\\Users\\natal\\Source\\repos\\colppy\\consumir api\\Entidades\\Entidades.csproj",
         "projectName": "Entidades",
-        "projectPath": "C:\\Users\\Federico\\Desktop\\Soluciones visual\\SimpleMAK\\consumir api\\Entidades\\Entidades.csproj",
-        "packagesPath": "C:\\Users\\Federico\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Federico\\Desktop\\Soluciones visual\\SimpleMAK\\consumir api\\Entidades\\obj\\",
+        "projectPath": "C:\\Users\\natal\\Source\\repos\\colppy\\consumir api\\Entidades\\Entidades.csproj",
+        "packagesPath": "C:\\Users\\natal\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\natal\\Source\\repos\\colppy\\consumir api\\Entidades\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Federico\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\natal\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -61,7 +61,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }

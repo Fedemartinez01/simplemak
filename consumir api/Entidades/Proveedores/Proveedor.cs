@@ -1,6 +1,4 @@
 ﻿using Entidades;
-using Entidades.Clientes;
-using Entidades.Productos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
