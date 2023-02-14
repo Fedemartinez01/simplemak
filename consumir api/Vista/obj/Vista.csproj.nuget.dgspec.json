@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\natal\\Source\\repos\\colppy\\consumir api\\Vista\\Vista.csproj": {}
+    "C:\\Users\\Federico\\Desktop\\Simplemak\\Integracion colppy\\consumir api\\Vista\\Vista.csproj": {}
   },
   "projects": {
-    "C:\\Users\\natal\\Source\\repos\\colppy\\consumir api\\Entidades\\Entidades.csproj": {
+    "C:\\Users\\Federico\\Desktop\\Simplemak\\Integracion colppy\\consumir api\\Entidades\\Entidades.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\natal\\Source\\repos\\colppy\\consumir api\\Entidades\\Entidades.csproj",
+        "projectUniqueName": "C:\\Users\\Federico\\Desktop\\Simplemak\\Integracion colppy\\consumir api\\Entidades\\Entidades.csproj",
         "projectName": "Entidades",
-        "projectPath": "C:\\Users\\natal\\Source\\repos\\colppy\\consumir api\\Entidades\\Entidades.csproj",
-        "packagesPath": "C:\\Users\\natal\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\natal\\Source\\repos\\colppy\\consumir api\\Entidades\\obj\\",
+        "projectPath": "C:\\Users\\Federico\\Desktop\\Simplemak\\Integracion colppy\\consumir api\\Entidades\\Entidades.csproj",
+        "packagesPath": "C:\\Users\\Federico\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Federico\\Desktop\\Simplemak\\Integracion colppy\\consumir api\\Entidades\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\natal\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Federico\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -61,21 +61,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\natal\\Source\\repos\\colppy\\consumir api\\Vista\\Vista.csproj": {
+    "C:\\Users\\Federico\\Desktop\\Simplemak\\Integracion colppy\\consumir api\\Vista\\Vista.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\natal\\Source\\repos\\colppy\\consumir api\\Vista\\Vista.csproj",
+        "projectUniqueName": "C:\\Users\\Federico\\Desktop\\Simplemak\\Integracion colppy\\consumir api\\Vista\\Vista.csproj",
         "projectName": "Vista",
-        "projectPath": "C:\\Users\\natal\\Source\\repos\\colppy\\consumir api\\Vista\\Vista.csproj",
-        "packagesPath": "C:\\Users\\natal\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\natal\\Source\\repos\\colppy\\consumir api\\Vista\\obj\\",
+        "projectPath": "C:\\Users\\Federico\\Desktop\\Simplemak\\Integracion colppy\\consumir api\\Vista\\Vista.csproj",
+        "packagesPath": "C:\\Users\\Federico\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Federico\\Desktop\\Simplemak\\Integracion colppy\\consumir api\\Vista\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\natal\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Federico\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -89,8 +89,8 @@
           "net6.0-windows7.0": {
             "targetAlias": "net6.0-windows",
             "projectReferences": {
-              "C:\\Users\\natal\\Source\\repos\\colppy\\consumir api\\Entidades\\Entidades.csproj": {
-                "projectPath": "C:\\Users\\natal\\Source\\repos\\colppy\\consumir api\\Entidades\\Entidades.csproj"
+              "C:\\Users\\Federico\\Desktop\\Simplemak\\Integracion colppy\\consumir api\\Entidades\\Entidades.csproj": {
+                "projectPath": "C:\\Users\\Federico\\Desktop\\Simplemak\\Integracion colppy\\consumir api\\Entidades\\Entidades.csproj"
               }
             }
           }
@@ -129,7 +129,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -22,7 +22,7 @@ namespace Entidades.Clientes
 
         public ClienteSQL()
         {
-            connectionString = "Data Source=DESKTOP-DJIBSOF\\SQLEXPRESS;Initial Catalog=SystemERP_DB;Integrated Security=True";
+            connectionString = "Data Source=.;Initial Catalog=SystemERP_DB;Integrated Security=True";
             sqlCommand = new SqlCommand();
             sqlConnection = new SqlConnection(connectionString);
             sqlCommand.CommandType = System.Data.CommandType.Text;
