@@ -50,17 +50,25 @@
             this.txt_FechaFin = new System.Windows.Forms.DateTimePicker();
             this.txt_FechaInicio = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
+            this.lbl_Fechas = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.radio_1 = new System.Windows.Forms.RadioButton();
+            this.radio_2 = new System.Windows.Forms.RadioButton();
+            this.group1 = new System.Windows.Forms.GroupBox();
+            this.group2 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.group1.SuspendLayout();
+            this.group2.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnCargarClientes
             // 
             this.btnCargarClientes.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnCargarClientes.BackColor = System.Drawing.Color.White;
-            this.btnCargarClientes.Location = new System.Drawing.Point(31, 237);
+            this.btnCargarClientes.Location = new System.Drawing.Point(22, 387);
             this.btnCargarClientes.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCargarClientes.Name = "btnCargarClientes";
-            this.btnCargarClientes.Size = new System.Drawing.Size(196, 66);
+            this.btnCargarClientes.Size = new System.Drawing.Size(149, 64);
             this.btnCargarClientes.TabIndex = 7;
             this.btnCargarClientes.Text = "CARGAR CLIENTES";
             this.btnCargarClientes.UseVisualStyleBackColor = false;
@@ -70,10 +78,10 @@
             // 
             this.btnCargarProductos.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnCargarProductos.BackColor = System.Drawing.Color.White;
-            this.btnCargarProductos.Location = new System.Drawing.Point(31, 346);
+            this.btnCargarProductos.Location = new System.Drawing.Point(189, 387);
             this.btnCargarProductos.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCargarProductos.Name = "btnCargarProductos";
-            this.btnCargarProductos.Size = new System.Drawing.Size(196, 64);
+            this.btnCargarProductos.Size = new System.Drawing.Size(149, 64);
             this.btnCargarProductos.TabIndex = 10;
             this.btnCargarProductos.Text = "CARGAR PRODUCTOS";
             this.btnCargarProductos.UseVisualStyleBackColor = false;
@@ -83,10 +91,10 @@
             // 
             this.btnCargarProveedores.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnCargarProveedores.BackColor = System.Drawing.Color.White;
-            this.btnCargarProveedores.Location = new System.Drawing.Point(301, 237);
+            this.btnCargarProveedores.Location = new System.Drawing.Point(357, 387);
             this.btnCargarProveedores.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCargarProveedores.Name = "btnCargarProveedores";
-            this.btnCargarProveedores.Size = new System.Drawing.Size(196, 64);
+            this.btnCargarProveedores.Size = new System.Drawing.Size(149, 64);
             this.btnCargarProveedores.TabIndex = 11;
             this.btnCargarProveedores.Text = "CARGAR PROVEEDORES";
             this.btnCargarProveedores.UseVisualStyleBackColor = false;
@@ -167,7 +175,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::Vista.Properties.Resources.logo;
-            this.pictureBox1.Location = new System.Drawing.Point(104, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(0, 1);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(305, 39);
             this.pictureBox1.TabIndex = 13;
@@ -177,10 +185,10 @@
             // 
             this.btnCargarTodos.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnCargarTodos.BackColor = System.Drawing.Color.White;
-            this.btnCargarTodos.Location = new System.Drawing.Point(301, 346);
+            this.btnCargarTodos.Location = new System.Drawing.Point(522, 387);
             this.btnCargarTodos.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCargarTodos.Name = "btnCargarTodos";
-            this.btnCargarTodos.Size = new System.Drawing.Size(196, 64);
+            this.btnCargarTodos.Size = new System.Drawing.Size(149, 64);
             this.btnCargarTodos.TabIndex = 14;
             this.btnCargarTodos.Text = "CARGAR TODOS";
             this.btnCargarTodos.UseVisualStyleBackColor = false;
@@ -188,7 +196,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(31, 162);
+            this.label2.Location = new System.Drawing.Point(24, 86);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 18);
@@ -198,7 +206,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(31, 118);
+            this.label3.Location = new System.Drawing.Point(24, 35);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(53, 18);
@@ -207,7 +215,7 @@
             // 
             // txt_FechaFin
             // 
-            this.txt_FechaFin.Location = new System.Drawing.Point(101, 157);
+            this.txt_FechaFin.Location = new System.Drawing.Point(94, 81);
             this.txt_FechaFin.Margin = new System.Windows.Forms.Padding(4);
             this.txt_FechaFin.Name = "txt_FechaFin";
             this.txt_FechaFin.Size = new System.Drawing.Size(373, 25);
@@ -215,7 +223,7 @@
             // 
             // txt_FechaInicio
             // 
-            this.txt_FechaInicio.Location = new System.Drawing.Point(104, 113);
+            this.txt_FechaInicio.Location = new System.Drawing.Point(97, 30);
             this.txt_FechaInicio.Margin = new System.Windows.Forms.Padding(4);
             this.txt_FechaInicio.Name = "txt_FechaInicio";
             this.txt_FechaInicio.Size = new System.Drawing.Size(370, 25);
@@ -224,25 +232,92 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(141, 54);
+            this.label1.Location = new System.Drawing.Point(311, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(233, 18);
             this.label1.TabIndex = 19;
             this.label1.Text = "SISTEMA DE CARGA A COLPPY";
+            // 
+            // lbl_Fechas
+            // 
+            this.lbl_Fechas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.lbl_Fechas.FormattingEnabled = true;
+            this.lbl_Fechas.Items.AddRange(new object[] {
+            "Hoy",
+            "Últimos 3 días",
+            "Últimos 10 días"});
+            this.lbl_Fechas.Location = new System.Drawing.Point(95, 44);
+            this.lbl_Fechas.Name = "lbl_Fechas";
+            this.lbl_Fechas.Size = new System.Drawing.Size(191, 26);
+            this.lbl_Fechas.TabIndex = 20;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(25, 44);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(53, 18);
+            this.label4.TabIndex = 21;
+            this.label4.Text = "Fecha";
+            // 
+            // radio_1
+            // 
+            this.radio_1.AutoSize = true;
+            this.radio_1.Location = new System.Drawing.Point(22, 117);
+            this.radio_1.Name = "radio_1";
+            this.radio_1.Size = new System.Drawing.Size(143, 22);
+            this.radio_1.TabIndex = 24;
+            this.radio_1.TabStop = true;
+            this.radio_1.Text = "DESDE / HASTA";
+            this.radio_1.UseVisualStyleBackColor = true;
+            this.radio_1.CheckedChanged += new System.EventHandler(this.radio_1_CheckedChanged);
+            // 
+            // radio_2
+            // 
+            this.radio_2.AutoSize = true;
+            this.radio_2.Location = new System.Drawing.Point(22, 220);
+            this.radio_2.Name = "radio_2";
+            this.radio_2.Size = new System.Drawing.Size(71, 22);
+            this.radio_2.TabIndex = 25;
+            this.radio_2.TabStop = true;
+            this.radio_2.Text = "DESDE";
+            this.radio_2.UseVisualStyleBackColor = true;
+            this.radio_2.CheckedChanged += new System.EventHandler(this.radio_2_CheckedChanged);
+            // 
+            // group1
+            // 
+            this.group1.Controls.Add(this.txt_FechaFin);
+            this.group1.Controls.Add(this.txt_FechaInicio);
+            this.group1.Controls.Add(this.label3);
+            this.group1.Controls.Add(this.label2);
+            this.group1.Location = new System.Drawing.Point(189, 84);
+            this.group1.Name = "group1";
+            this.group1.Size = new System.Drawing.Size(482, 128);
+            this.group1.TabIndex = 26;
+            this.group1.TabStop = false;
+            // 
+            // group2
+            // 
+            this.group2.Controls.Add(this.lbl_Fechas);
+            this.group2.Controls.Add(this.label4);
+            this.group2.Location = new System.Drawing.Point(189, 218);
+            this.group2.Name = "group2";
+            this.group2.Size = new System.Drawing.Size(482, 98);
+            this.group2.TabIndex = 27;
+            this.group2.TabStop = false;
             // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.BackgroundImage = global::Vista.Properties.Resources.logo;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClientSize = new System.Drawing.Size(525, 423);
+            this.ClientSize = new System.Drawing.Size(683, 464);
+            this.Controls.Add(this.group2);
+            this.Controls.Add(this.group1);
+            this.Controls.Add(this.radio_2);
+            this.Controls.Add(this.radio_1);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.txt_FechaFin);
-            this.Controls.Add(this.txt_FechaInicio);
             this.Controls.Add(this.btnCargarTodos);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnCargarProveedores);
@@ -256,6 +331,10 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SIMPLEMAK";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.group1.ResumeLayout(false);
+            this.group1.PerformLayout();
+            this.group2.ResumeLayout(false);
+            this.group2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -284,5 +363,11 @@
         private DateTimePicker txt_FechaFin;
         private DateTimePicker txt_FechaInicio;
         private Label label1;
+        private ComboBox lbl_Fechas;
+        private Label label4;
+        private RadioButton radio_1;
+        private RadioButton radio_2;
+        private GroupBox group1;
+        private GroupBox group2;
     }
 }

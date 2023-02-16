@@ -60,7 +60,8 @@ namespace Vista
 
             clientes = ClienteSQL.LeerBaseDeDatos(); // Tramos listado de base de datos
             proveedores = provedorSQL.LeerBaseDeDatos();
-            //productos = ProductoSQL.LeerBaseDeDatos();
+
+            this.radio_1.Checked = true;
 
             ObtenerToken(); // Obtenemos un nuevo token
 
@@ -84,8 +85,36 @@ namespace Vista
         }
         private void btnCargarProductos_Click_1(object sender, EventArgs e)
         {
-            AgregarProductos(this.txt_FechaInicio.Value, this.txt_FechaFin.Value);
             BloquearInputs();
+
+            #region Asignar fecha
+            DateTime fechaInicio = DateTime.Today;
+            DateTime fechaFin = DateTime.Now;
+
+            if (group2.Enabled)
+            {
+                switch (this.lbl_Fechas.Text)
+                {
+                    case "Hoy":
+                        fechaInicio = DateTime.Today;
+                        break;
+                    case "Últimos 3 días":
+                        fechaInicio = DateTime.Today.AddDays(-3);
+                        break;
+                    case "Últimos 10 días":
+                        fechaInicio = DateTime.Today.AddDays(-10);
+                        break;
+                }
+            }
+            else
+            {
+                fechaInicio = this.txt_FechaInicio.Value;
+                fechaFin = this.txt_FechaFin.Value;
+            }
+            #endregion
+
+            AgregarProductos(fechaInicio, fechaFin);
+            DesbloquearInpunts();
         }
         private void BloquearInputs()
         {
@@ -114,6 +143,15 @@ namespace Vista
         {
             try
             {
+                #region Convertir a formato fecha SQL
+
+                string fechaInicioSQL = $"{fechaInicio.Year}-{fechaInicio.Month}-{fechaInicio.Day}";
+
+                string fechaFinSql = $"{fechaFin.Year}-{fechaFin.Month}-{fechaFin.Day} 23:59:59";
+
+                #endregion
+
+                productos = ProductoSQL.LeerBaseDeDatosPorFecha(fechaInicioSQL, fechaFinSql);
 
                 if (claveSesion == "null") //Validamos que se haya generado el token
                     throw new Exception();
@@ -121,44 +159,38 @@ namespace Vista
                 frm_Cargando pantallaCarga = new frm_Cargando();
                 pantallaCarga.Show();
 
-                #region Convertir a formato fecha SQL
 
-                string fechaInicioSQL = $"{fechaInicio.Year}-{fechaInicio.Month}-{fechaInicio.Day}";
-
-                string fechaFinSql = $"{fechaFin.Year}-{fechaFin.Month}-{fechaFin.Day}";
-
-                #endregion
-
-                productos = ProductoSQL.LeerBaseDeDatosPorFecha(fechaInicioSQL, fechaFinSql);
-
-                var cantProductosAgregados = 0;
-
-                foreach (var producto in productos)
+                if(productos is not null)
                 {
-                    producto.parameters.sesion.claveSesion = claveSesion; // Asignamos el token generado al parámetro correspondiente
-                    using (var httpClient = new HttpClient())
-                    {
-                        var response = await httpClient.PostAsJsonAsync(url, producto); // Realizamos la llamada a la API
-                                         
-                        if (response.IsSuccessStatusCode)
-                        {
-                            var rtaString = await response.Content.ReadAsStringAsync();
+                    var cantProductosAgregados = 0;
 
-                            if(rtaString.Contains("\"message\": \"La operación se realizó con éxito.\"") || rtaString.Contains("\"message\":\"La operaci\\u00f3n se realiz\\u00f3 con \\u00e9xito.\""))
-                            {
-                                cantProductosAgregados++;
-                                ProductoSQL.CambiarEstadoColppy(producto.parameters.codigo);
-                            }     
-                        }
-                        else
+                    foreach (var producto in productos)
+                    {
+                        producto.parameters.sesion.claveSesion = claveSesion; // Asignamos el token generado al parámetro correspondiente
+                        using (var httpClient = new HttpClient())
                         {
-                            throw new Exception();
+                            var response = await httpClient.PostAsJsonAsync(url, producto); // Realizamos la llamada a la API
+                                         
+                            if (response.IsSuccessStatusCode)
+                            {
+                                var rtaString = await response.Content.ReadAsStringAsync();
+
+                                if(rtaString.Contains("\"message\": \"La operación se realizó con éxito.\"") || rtaString.Contains("\"message\":\"La operaci\\u00f3n se realiz\\u00f3 con \\u00e9xito.\""))
+                                {
+                                    cantProductosAgregados++;
+                                    //ProductoSQL.CambiarEstadoColppy(producto.parameters.codigo);
+                                }     
+                            }
+                            else
+                            {
+                                throw new Exception();
+                            }
                         }
                     }
+                    MessageBox.Show("CARGA DE PRODUCTOS FINALZADA\nPRODUCTOS NUEVOS AGREGADOS: " + cantProductosAgregados);
                 }
                 pantallaCarga.Close();
-                DesbloquearInpunts();
-                MessageBox.Show("CARGA DE PRODUCTOS FINALZADA\nPRODUCTOS NUEVOS AGREGADOS: " + cantProductosAgregados);
+
             }
             catch (Exception ex)
             {
@@ -317,6 +349,18 @@ namespace Vista
         private void label4_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void radio_1_CheckedChanged(object sender, EventArgs e)
+        {
+            group2.Enabled = false;
+            group1.Enabled = true;
+        }
+
+        private void radio_2_CheckedChanged(object sender, EventArgs e)
+        {
+            group1.Enabled = false;
+            group2.Enabled = true;
         }
 
 

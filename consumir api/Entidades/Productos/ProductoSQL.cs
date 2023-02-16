@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -11,9 +12,7 @@ namespace Entidades.Productos
     {
         #region Atributos
 
-        string connectionString;
-        SqlCommand sqlCommand;
-        SqlConnection sqlConnection;
+        private SqlConnection sqlConnection = new SqlConnection("Data Source=.;Initial Catalog=SystemERP_DB;Integrated Security=True");
 
         #endregion
 
@@ -21,11 +20,7 @@ namespace Entidades.Productos
 
         public ProductoSQL()
         {
-            connectionString = "Data Source=.;Initial Catalog=SystemERP_DB;Integrated Security=True";
-            sqlCommand = new SqlCommand();
-            sqlConnection = new SqlConnection(connectionString);
-            sqlCommand.CommandType = System.Data.CommandType.Text;
-            sqlCommand.Connection = sqlConnection;
+
         }
 
         #endregion
@@ -33,66 +28,68 @@ namespace Entidades.Productos
         #region Metodos
 
 
-        public List<Producto> LeerBaseDeDatos()
-        {
-            List<Producto> productos = new List<Producto>();
-            try
-            {
-                sqlConnection.Open();
-                Console.WriteLine("--- Conexion abierta ---");
+        //public List<Producto> LeerBaseDeDatos()
+        //{
+        //    List<Producto> productos = new List<Producto>();
+        //    try
+        //    {
+        //        sqlConnection.Open();
+        //        Console.WriteLine("--- Conexion abierta ---");
 
-                //sqlCommand.CommandText = "select p.Code, p.Description, s.Description as Subcategoria from Products p inner join UnitMeasures um on um.Id = p.UnitMeasureId inner join SubCategories s on s.Id = p.SubCategoryId order by p.LastModifiedOn desc";
+        //        //sqlCommand.CommandText = "select p.Code, p.Description, s.Description as Subcategoria from Products p inner join UnitMeasures um on um.Id = p.UnitMeasureId inner join SubCategories s on s.Id = p.SubCategoryId order by p.LastModifiedOn desc";
 
-                sqlCommand.CommandText = "select p.Code, p.Description, s.Description as Subcategoria from Products p inner join UnitMeasures um on um.Id = p.UnitMeasureId inner join SubCategories s on s.Id = p.SubCategoryId where p.IsOnColppy = 0 order by p.LastModifiedOn desc";
+        //        sqlCommand.CommandText = "select p.Code, p.Description, s.Description as Subcategoria from Products p inner join UnitMeasures um on um.Id = p.UnitMeasureId inner join SubCategories s on s.Id = p.SubCategoryId where p.IsOnColppy = 0 order by p.LastModifiedOn desc";
 
-                using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
-                {
-                    while (dataReader.Read())
-                    {
-                        string codigo = dataReader["Code"].ToString();
-                        string descripcion = dataReader["Description"].ToString();
-                        string subCatergoria = dataReader["Subcategoria"].ToString();
+        //        using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
+        //        {
+        //            while (dataReader.Read())
+        //            {
+        //                string codigo = dataReader["Code"].ToString();
+        //                string descripcion = dataReader["Description"].ToString();
+        //                string subCatergoria = dataReader["Subcategoria"].ToString();
 
-                        try
-                        {
-                            Producto producto = new Producto(codigo, descripcion, subCatergoria);
-                            productos.Add(producto);
+        //                try
+        //                {
+        //                    Producto producto = new Producto(codigo, descripcion, subCatergoria);
+        //                    productos.Add(producto);
 
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error: {ex.Message}");
-                        }
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    Console.WriteLine($"Error: {ex.Message}");
+        //                }
 
-                    }
-                }
-                return productos;
-            }
-            catch (Exception)
-            {
+        //            }
+        //        }
+        //        return productos;
+        //    }
+        //    catch (Exception)
+        //    {
 
-                throw;
-            }
-            finally
-            {
-                sqlConnection.Close();
-            }
-        }
-        
+        //        throw;
+        //    }
+        //    finally
+        //    {
+        //        sqlConnection.Close();
+        //    }
+        //}
+
         public List<Producto> LeerBaseDeDatosPorFecha(string fechaInicio, string fechaFin)
         {
             List<Producto> productos = new List<Producto>();
+
             try
             {
-
                 sqlConnection.Open();
-                Console.WriteLine("--- Conexion abierta ---");
 
-                sqlCommand.CommandText = "select p.Code, p.Description, s.Description as Subcategoria from Products p inner join UnitMeasures um on um.Id = p.UnitMeasureId inner join SubCategories s on s.Id = p.SubCategoryId where p.LastModifiedOn between @FechaInicio and @FechaFin order by p.LastModifiedOn desc";
-                sqlCommand.Parameters.AddWithValue("@FechaInicio", fechaInicio);
-                sqlCommand.Parameters.AddWithValue("@FechaFin", fechaFin);
+                SqlCommand cmd = new SqlCommand("spLeerProductosPorFecha", sqlConnection);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-                using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
+                cmd.Parameters.AddWithValue("@FechaInicio", fechaInicio);
+                cmd.Parameters.AddWithValue("@FechaFin", fechaFin);
+
+
+                using (SqlDataReader dataReader = cmd.ExecuteReader())
                 {
                     while (dataReader.Read())
                     {
@@ -117,26 +114,25 @@ namespace Entidades.Productos
             }
             catch (Exception)
             {
-
-                throw;
+                return null;
             }
             finally
             {
                 sqlConnection.Close();
             }
-        }
-
+        }    
         public void CambiarEstadoColppy(string Code)
         {
             var isOk = 0;
             try
             {
-                sqlConnection.Open();
-                Console.WriteLine("--- Conexion abierta ---");
+                sqlConnection.Open(); 
 
-                sqlCommand.CommandText = $"UPDATE Products SET IsOnColppy = 1 where Code like @Code";
-                sqlCommand.Parameters.AddWithValue("@Code", Code);
-                isOk = sqlCommand.ExecuteNonQuery();
+                SqlCommand cmd = new SqlCommand("spCambiarEstadoColppyProductos", sqlConnection);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@Code", Code);
+                isOk = cmd.ExecuteNonQuery();
 
                 if (isOk == 1)
                 {
@@ -146,7 +142,6 @@ namespace Entidades.Productos
                 {
                     Console.WriteLine("Error");
                 }
-
             }
             catch
             {
