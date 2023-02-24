@@ -13,6 +13,7 @@ namespace Vista
 {
     public partial class frm_Cargando : Form
     {
+        public bool Cancel { get; set; } = true;
         public frm_Cargando(int segundos)
         {
             InitializeComponent();
@@ -20,9 +21,12 @@ namespace Vista
             this.labelCarga.Text = $"Hora estimada de finalizacion:\n{horaEstimada.ToString("HH:mm")}";
         }
 
-        private void btn_Cancelar_Click(object sender, EventArgs e)
+        private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.Close();
+            this.Cancel = false; ;
         }
+
+
     }
 }

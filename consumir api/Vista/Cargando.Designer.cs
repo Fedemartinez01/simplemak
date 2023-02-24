@@ -31,6 +31,7 @@
             this.lbl_Cargando = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.labelCarga = new System.Windows.Forms.Label();
+            this.btnCancelar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,6 +63,19 @@
             this.labelCarga.Size = new System.Drawing.Size(0, 18);
             this.labelCarga.TabIndex = 2;
             // 
+            // btnCancelar
+            // 
+            this.btnCancelar.BackColor = System.Drawing.Color.White;
+            this.btnCancelar.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
+            this.btnCancelar.Font = new System.Drawing.Font("Monospac821 BT", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnCancelar.Location = new System.Drawing.Point(223, 106);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(75, 23);
+            this.btnCancelar.TabIndex = 3;
+            this.btnCancelar.Text = "CANCELAR";
+            this.btnCancelar.UseVisualStyleBackColor = false;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            // 
             // frm_Cargando
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -69,6 +83,7 @@
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(310, 141);
             this.ControlBox = false;
+            this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.labelCarga);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lbl_Cargando);
@@ -91,5 +106,6 @@
         private Label lbl_Cargando;
         private PictureBox pictureBox1;
         private Label labelCarga;
+        private Button btnCancelar;
     }
 }

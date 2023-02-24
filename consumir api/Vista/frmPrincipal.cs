@@ -168,6 +168,39 @@ namespace Vista
             AgregarProductos(fechaInicio, fechaFin);
             DesbloquearInpunts();
         }
+        private void btnEditarProductos_Click(object sender, EventArgs e)
+        {
+            BloquearInputs();
+
+            #region Asignar fecha
+            DateTime fechaInicio = DateTime.Today;
+            DateTime fechaFin = DateTime.Now;
+
+            if (group2.Enabled)
+            {
+                switch (this.lbl_Fechas.Text)
+                {
+                    case "Hoy":
+                        fechaInicio = DateTime.Today;
+                        break;
+                    case "Últimos 3 días":
+                        fechaInicio = DateTime.Today.AddDays(-3);
+                        break;
+                    case "Últimos 10 días":
+                        fechaInicio = DateTime.Today.AddDays(-10);
+                        break;
+                }
+            }
+            else
+            {
+                fechaInicio = this.txt_FechaInicio.Value;
+                fechaFin = this.txt_FechaFin.Value;
+            }
+            #endregion
+
+            EditarProductos(fechaInicio, fechaFin);
+            DesbloquearInpunts();
+        }
         #endregion
 
         #region AgregarEnAPI
@@ -184,19 +217,16 @@ namespace Vista
                 #endregion
 
                 List<Producto> productos = new List<Producto>();
-                List<ProductoUpdate> productosUpdate = new List<ProductoUpdate>();
 
                 productos = Conexion.LeerProductos(fechaInicioSQL, fechaFinSql);
-                productosUpdate = Conexion.LeerProductosUpdate(fechaInicioSQL, fechaFinSql);
 
-                if (claveSesion == "null") //Validamos que se haya generado el token
+                if (claveSesion == "null") 
                     throw new ExceptionColppy();
 
-                frm_Cargando pantallaCarga = new frm_Cargando(productos.Count + productosUpdate.Count);
+                frm_Cargando pantallaCarga = new frm_Cargando(productos.Count);
                 pantallaCarga.Show();
 
                 var cantProductosAgregados = 0;
-                var cantProductosActualizados = 0;
 
                 #region Carga
                 if (productos.Count > 0)
@@ -205,75 +235,51 @@ namespace Vista
 
                     foreach (var producto in productos)
                     {
-                        producto.parameters.sesion.claveSesion = claveSesion; // Asignamos el token generado al parámetro correspondiente
-                        using (var httpClient = new HttpClient())
+                        if(pantallaCarga.Cancel is false)
                         {
-                            var response = await httpClient.PostAsJsonAsync(url, producto); // Realizamos la llamada a la API
-
-                            if (response.IsSuccessStatusCode)
+                            producto.parameters.sesion.claveSesion = claveSesion; 
+                            using (var httpClient = new HttpClient())
                             {
-                                var rtaString = await response.Content.ReadAsStringAsync();
+                                var response = await httpClient.PostAsJsonAsync(url, producto); 
 
-
-                                if (rtaString.Contains("\"message\": \"La operación se realizó con éxito.\"") || rtaString.Contains("\"message\":\"La operaci\\u00f3n se realiz\\u00f3 con \\u00e9xito.\""))
+                                if (response.IsSuccessStatusCode)
                                 {
-                                    RespuestaAltaProducto rta = JsonConvert.DeserializeObject<RespuestaAltaProducto>(rtaString);
+                                    var rtaString = await response.Content.ReadAsStringAsync();
 
-                                    idProductoColppy = rta.response.data.idItem.ToString();
 
-                                    cantProductosAgregados++;
+                                    if (rtaString.Contains("\"message\": \"La operación se realizó con éxito.\"") || rtaString.Contains("\"message\":\"La operaci\\u00f3n se realiz\\u00f3 con \\u00e9xito.\""))
+                                    {
+                                        RespuestaAltaProducto rta = JsonConvert.DeserializeObject<RespuestaAltaProducto>(rtaString);
 
-                                    Conexion.CambiarEstadoColppy(producto.parameters.codigo, idProductoColppy);
+                                        idProductoColppy = rta.response.data.idItem.ToString();
+
+                                        cantProductosAgregados++;
+
+                                        Conexion.CambiarEstadoColppy(producto.parameters.codigo, idProductoColppy);
+                                    }
+                                }
+                                else
+                                {
+                                    throw new Exception();
                                 }
                             }
-                            else
-                            {
-                                throw new Exception();
-                            }
                         }
+
                     }
                 }
-                    #endregion
+                #endregion
 
-                #region Update
-                if (productosUpdate.Count > 0)
-                {
 
-                    foreach (var producto in productosUpdate)
-                    {
-                        producto.parameters.sesion.claveSesion = claveSesion; // Asignamos el token generado al parámetro correspondiente
-                        using (var httpClient = new HttpClient())
-                        {
-                            var response = await httpClient.PostAsJsonAsync(url, producto); // Realizamos la llamada a la API
-
-                            if (response.IsSuccessStatusCode)
-                            {
-                                var rtaString = await response.Content.ReadAsStringAsync();
-
-                                if (rtaString.Contains("\"message\": \"La operación se realizó con éxito.\"") || rtaString.Contains("\"message\":\"La operaci\\u00f3n se realiz\\u00f3 con \\u00e9xito.\""))
-                                {
-                                    cantProductosActualizados++;
-                                }
-                            }
-                            else
-                            {
-                                throw new Exception();
-                            }
-                        }
-                    }
-                }
-                    #endregion
-
-                    MessageBox.Show($"CARGA DE PRODUCTOS FINALZADA\nPRODUCTOS NUEVOS AGREGADOS: {cantProductosAgregados}\nPRODUCTOS ACTUALIZADOS: {cantProductosActualizados}");
+                    MessageBox.Show($"CARGA DE PRODUCTOS FINALZADA\nPRODUCTOS NUEVOS AGREGADOS: {cantProductosAgregados}");
                 
                 pantallaCarga.Close();
 
             }
-            catch(ExceptionColppy ex)
+            catch(ExceptionColppy)
             {
                 MessageBox.Show($"Colppy no se encuentra disponible", "No se ha podido realizar la carga", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch (Exception ex)
+            catch (Exception)
              {
                 MessageBox.Show($"Hubo un error en carga de datos", "No se ha podido realizar la carga", MessageBoxButtons.OK, MessageBoxIcon.Error);
              }
@@ -401,6 +407,80 @@ namespace Vista
             }
 
         }
+        private async void EditarProductos(DateTime fechaInicio, DateTime fechaFin)
+        {
+            try
+            {
+                #region Formatear fecha
+                string fechaInicioSQL = $"{fechaInicio.Year}-{fechaInicio.Month}-{fechaInicio.Day}";
+
+                string fechaFinSql = $"{fechaFin.Year}-{fechaFin.Month}-{fechaFin.Day} 23:59:59";
+
+                #endregion
+
+                List<ProductoUpdate> productosUpdate = new List<ProductoUpdate>();
+
+                productosUpdate = Conexion.LeerProductosUpdate(fechaInicioSQL, fechaFinSql);
+
+                if (claveSesion == "null") //Validamos que se haya generado el token
+                    throw new ExceptionColppy();
+
+                frm_Cargando pantallaCarga = new frm_Cargando(productosUpdate.Count);
+                pantallaCarga.Show();
+
+                var cantProductosActualizados = 0;
+
+
+                #region Update
+                if (productosUpdate.Count > 0)
+                {
+                    foreach (var producto in productosUpdate)
+                    {
+
+                        if(pantallaCarga.Cancel is true)
+                        {
+                            producto.parameters.sesion.claveSesion = claveSesion;
+                            using (var httpClient = new HttpClient())
+                            {
+                                var response = await httpClient.PostAsJsonAsync(url, producto);
+
+                                if (response.IsSuccessStatusCode)
+                                {
+                                    var rtaString = await response.Content.ReadAsStringAsync();
+
+                                    if (rtaString.Contains("\"message\": \"La operación se realizó con éxito.\"") || rtaString.Contains("\"message\":\"La operaci\\u00f3n se realiz\\u00f3 con \\u00e9xito.\""))
+                                    {
+                                        cantProductosActualizados++;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine(2);
+                                    }
+                                }
+                                else
+                                {
+                                    throw new Exception();
+                                }
+                            }
+                        }
+                    }
+                }
+                #endregion
+
+                MessageBox.Show($"ACTUALIZACION DE PRODUCTOS FINALZADA\nPRODUCTOS ACTUALIZADOS: {cantProductosActualizados}");
+
+                pantallaCarga.Close();
+
+            }
+            catch (ExceptionColppy)
+            {
+                MessageBox.Show($"Colppy no se encuentra disponible", "No se ha podido realizar la carga", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show($"Hubo un error en carga de datos", "No se ha podido realizar la carga", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         private async void ObtenerToken()
         {
             using (var httpClient = new HttpClient())
@@ -464,6 +544,8 @@ namespace Vista
             group2.Enabled = true;
         }
         #endregion
+
+
     }
     
 }

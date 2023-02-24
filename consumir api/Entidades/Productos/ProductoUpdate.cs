@@ -31,16 +31,17 @@ namespace Entidades.Productos
 
                 idEmpresa = "62919",
                 idItem = idColppy,
+                id = idColppy,
                 codigo = codigo,
                 descripcion = descripcion,
                 subCategoria = subCategoria,
                 detalle = "0",
                 minimo = "0",
-                ultimoPrecioCompra = "0",
                 precioVenta = "0",
                 iva = "21",
                 tipoItem = "P",
                 unidadMedida = "un",
+                ultimoPrecioCompra = "0",
             };
 
              AsignarCuentas();

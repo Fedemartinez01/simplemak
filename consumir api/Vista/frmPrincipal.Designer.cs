@@ -57,6 +57,7 @@
             this.group1 = new System.Windows.Forms.GroupBox();
             this.group2 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.btnEditarProductos = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.group1.SuspendLayout();
             this.group2.SuspendLayout();
@@ -66,10 +67,10 @@
             // 
             this.btnCargarClientes.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnCargarClientes.BackColor = System.Drawing.Color.White;
-            this.btnCargarClientes.Location = new System.Drawing.Point(22, 387);
+            this.btnCargarClientes.Location = new System.Drawing.Point(22, 400);
             this.btnCargarClientes.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCargarClientes.Name = "btnCargarClientes";
-            this.btnCargarClientes.Size = new System.Drawing.Size(149, 64);
+            this.btnCargarClientes.Size = new System.Drawing.Size(149, 51);
             this.btnCargarClientes.TabIndex = 7;
             this.btnCargarClientes.Text = "CARGAR CLIENTES";
             this.btnCargarClientes.UseVisualStyleBackColor = false;
@@ -79,10 +80,10 @@
             // 
             this.btnCargarProductos.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnCargarProductos.BackColor = System.Drawing.Color.White;
-            this.btnCargarProductos.Location = new System.Drawing.Point(189, 387);
+            this.btnCargarProductos.Location = new System.Drawing.Point(189, 400);
             this.btnCargarProductos.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCargarProductos.Name = "btnCargarProductos";
-            this.btnCargarProductos.Size = new System.Drawing.Size(149, 64);
+            this.btnCargarProductos.Size = new System.Drawing.Size(149, 51);
             this.btnCargarProductos.TabIndex = 10;
             this.btnCargarProductos.Text = "CARGAR PRODUCTOS";
             this.btnCargarProductos.UseVisualStyleBackColor = false;
@@ -92,10 +93,10 @@
             // 
             this.btnCargarProveedores.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnCargarProveedores.BackColor = System.Drawing.Color.White;
-            this.btnCargarProveedores.Location = new System.Drawing.Point(357, 387);
+            this.btnCargarProveedores.Location = new System.Drawing.Point(357, 400);
             this.btnCargarProveedores.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCargarProveedores.Name = "btnCargarProveedores";
-            this.btnCargarProveedores.Size = new System.Drawing.Size(149, 64);
+            this.btnCargarProveedores.Size = new System.Drawing.Size(149, 51);
             this.btnCargarProveedores.TabIndex = 11;
             this.btnCargarProveedores.Text = "CARGAR PROVEEDORES";
             this.btnCargarProveedores.UseVisualStyleBackColor = false;
@@ -186,10 +187,10 @@
             // 
             this.btnCargarTodos.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnCargarTodos.BackColor = System.Drawing.Color.White;
-            this.btnCargarTodos.Location = new System.Drawing.Point(522, 387);
+            this.btnCargarTodos.Location = new System.Drawing.Point(522, 400);
             this.btnCargarTodos.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCargarTodos.Name = "btnCargarTodos";
-            this.btnCargarTodos.Size = new System.Drawing.Size(149, 64);
+            this.btnCargarTodos.Size = new System.Drawing.Size(149, 51);
             this.btnCargarTodos.TabIndex = 14;
             this.btnCargarTodos.Text = "CARGAR TODOS";
             this.btnCargarTodos.UseVisualStyleBackColor = false;
@@ -317,6 +318,17 @@
             this.label5.TabIndex = 28;
             this.label5.Text = "Tarda 1 segundo por item aproximadamente";
             // 
+            // btnEditarProductos
+            // 
+            this.btnEditarProductos.BackColor = System.Drawing.Color.White;
+            this.btnEditarProductos.Location = new System.Drawing.Point(189, 342);
+            this.btnEditarProductos.Name = "btnEditarProductos";
+            this.btnEditarProductos.Size = new System.Drawing.Size(149, 51);
+            this.btnEditarProductos.TabIndex = 29;
+            this.btnEditarProductos.Text = "ACTUALIZAR PRODUCTOS";
+            this.btnEditarProductos.UseVisualStyleBackColor = false;
+            this.btnEditarProductos.Click += new System.EventHandler(this.btnEditarProductos_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -324,6 +336,7 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(683, 464);
+            this.Controls.Add(this.btnEditarProductos);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.group2);
             this.Controls.Add(this.group1);
@@ -383,5 +396,6 @@
         private GroupBox group1;
         private GroupBox group2;
         private Label label5;
+        private Button btnEditarProductos;
     }
 }
