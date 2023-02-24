@@ -23,7 +23,6 @@ namespace Entidades.Proveedores
             auth = new auth { usuario = "ntraficante@gmail.com", password = "e03c714818c4d45a033b467fa7b76797" };
 
             service = new service { provision = "Proveedor", operacion = "alta_proveedor" };
-
         }
         public Proveedor(string razonSocial, string nombreFantasia, string dirPostal, string dirPostalCiudad, string dirPostalCodigoPostal, string dirPostalProvincia, string dirPostalPais, string cUIT, string idUsuario, string activo, string idCondicionIva):this()
         {
@@ -64,7 +63,6 @@ namespace Entidades.Proveedores
                 idPlanCuenta = String.Empty,
             };
         }
-
         #endregion
     }
 

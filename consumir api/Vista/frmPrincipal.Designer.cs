@@ -56,6 +56,7 @@
             this.radio_2 = new System.Windows.Forms.RadioButton();
             this.group1 = new System.Windows.Forms.GroupBox();
             this.group2 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.group1.SuspendLayout();
             this.group2.SuspendLayout();
@@ -240,6 +241,7 @@
             // 
             // lbl_Fechas
             // 
+            this.lbl_Fechas.BackColor = System.Drawing.Color.White;
             this.lbl_Fechas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.lbl_Fechas.FormattingEnabled = true;
             this.lbl_Fechas.Items.AddRange(new object[] {
@@ -306,6 +308,15 @@
             this.group2.TabIndex = 27;
             this.group2.TabStop = false;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(236, 63);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(368, 18);
+            this.label5.TabIndex = 28;
+            this.label5.Text = "Tarda 1 segundo por item aproximadamente";
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -313,6 +324,7 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(683, 464);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.group2);
             this.Controls.Add(this.group1);
             this.Controls.Add(this.radio_2);
@@ -325,6 +337,7 @@
             this.Controls.Add(this.btnCargarClientes);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Monospac821 BT", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
             this.Name = "frmPrincipal";
@@ -369,5 +382,6 @@
         private RadioButton radio_2;
         private GroupBox group1;
         private GroupBox group2;
+        private Label label5;
     }
 }

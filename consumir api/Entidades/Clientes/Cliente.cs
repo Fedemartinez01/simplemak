@@ -124,5 +124,40 @@ namespace Entidades.Clientes
         public infoGeneral info_general { get; set; }
         public infoOtra info_otra { get; set; }
     }
-
+    public class infoGeneral
+    {
+        public string idCliente { get; set; }
+        public int idEmpresa { get; set; }
+        public string NombreFantasia { get; set; }
+        public string RazonSocial { get; set; }
+        public string CUIT { get; set; }
+        public string dni { get; set; }
+        public string DirPostal { get; set; }
+        public string DirPostalCiudad { get; set; }
+        public string DirPostalCodigoPostal { get; set; }
+        public string DirPostalProvincia { get; set; }
+        public string DirPostalPais { get; set; }
+        public string Telefono { get; set; }
+        public string Email { get; set; }
+    }
+    public class infoOtra
+    {
+        public string Activo { get; set; }
+        public string FechaAlta { get; set; }
+        public string DirFiscal { get; set; }
+        public string DirFiscalCiudad { get; set; }
+        public string DirFiscalCodigoPostal { get; set; }
+        public string DirFiscalProvincia { get; set; }
+        public string DirFiscalPais { get; set; }
+        public string idCondicionPago { get; set; }
+        public string idCondicionIva { get; set; }
+        public string porcentajeIVA { get; set; }
+        public string idPlanCuenta { get; set; }
+        public string CuentaCredito { get; set; }
+        public string DirEnvio { get; set; }
+        public string DirEnvioCiudad { get; set; }
+        public string DirEnvioCodigoPostal { get; set; }
+        public string DirEnvioProvincia { get; set; }
+        public string DirEnvioPais { get; set; }
+    }
 }

@@ -13,9 +13,11 @@ namespace Vista
 {
     public partial class frm_Cargando : Form
     {
-        public frm_Cargando()
+        public frm_Cargando(int segundos)
         {
             InitializeComponent();
+            DateTime horaEstimada = DateTime.Now.AddSeconds(segundos);
+            this.labelCarga.Text = $"Hora estimada de finalizacion:\n{horaEstimada.ToString("HH:mm")}";
         }
 
         private void btn_Cancelar_Click(object sender, EventArgs e)

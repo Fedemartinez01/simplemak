@@ -6,35 +6,31 @@ using System.Threading.Tasks;
 
 namespace Entidades.Productos
 {
-    public class Producto
+
+    public class ProductoUpdate
     {
-        #region Atributos
+        public AuthUp_p auth { get; set; }
+        public ServiceUp_p service { get; set; }
+        public ParametersUp_p parameters { get; set; }
 
-        public auth auth { get; set; }
-        public service service { get; set; }
-        public parametersProducto parameters { get; set; }
-
-        #endregion
-        
-        #region Constructor
-
-        public Producto()
+        public ProductoUpdate()
         {
-            auth = new auth { usuario = "ntraficante@gmail.com", password = "e03c714818c4d45a033b467fa7b76797" };
+            auth = new AuthUp_p { usuario = "ntraficante@gmail.com", password = "e03c714818c4d45a033b467fa7b76797" };
 
-            service = new service { provision = "Inventario", operacion = "alta_iteminventario" };
+            service = new ServiceUp_p { provision = "Inventario", operacion = "editar_iteminventario" };
         }
 
-        public Producto(string codigo, string descripcion, string subCategoria) : this()
+        public ProductoUpdate(string codigo, string descripcion, string subCategoria, string idColppy) : this()
         {
-            parameters = new parametersProducto
+            parameters = new ParametersUp_p
             {
-                sesion = new sesion
+                sesion = new SesionUp_p
                 {
                     usuario = "administracion@simplemak.com.ar",
                 },
 
-                idEmpresa = 62919,
+                idEmpresa = "62919",
+                idItem = idColppy,
                 codigo = codigo,
                 descripcion = descripcion,
                 subCategoria = subCategoria,
@@ -45,12 +41,10 @@ namespace Entidades.Productos
                 iva = "21",
                 tipoItem = "P",
                 unidadMedida = "un",
-                comentarioFactura = "0"
             };
 
-            AsignarCuentas();
+             AsignarCuentas();
         }
-        #endregion
 
         #region Métodos
 
@@ -122,7 +116,7 @@ namespace Entidades.Productos
                     this.parameters.ctaInventario = "11585";
                     break;
                 case "Instrumentos terminados":
-                    this.parameters.ctaInventario = "115937";
+                    this.parameters.ctaInventario = "";
                     break;
                 case "Insumos y Herramientas":
                     this.parameters.ctaInventario = "115936";
@@ -131,13 +125,13 @@ namespace Entidades.Productos
                     this.parameters.ctaInventario = "115931";
                     break;
                 case "Instrumentos conjuntos armados":
-                    this.parameters.ctaInventario = "115938";
+                    this.parameters.ctaInventario = "";
                     break;
                 case "Instrumentos piezas plegadas":
                     this.parameters.ctaInventario = "115934";
                     break;
                 case "Instrumentos piezas de revolución":
-                    this.parameters.ctaInventario = "115939";
+                    this.parameters.ctaInventario = "";
                     break;
                 case "Instrumentos piezas de corte":
                     this.parameters.ctaInventario = "115932";
@@ -149,13 +143,13 @@ namespace Entidades.Productos
                     this.parameters.ctaInventario = "115933";
                     break;
                 case "Insumos limpieza":
-                    this.parameters.ctaInventario = "115914";
+                    this.parameters.ctaInventario = "";
                     break;
                 case "Insumos consumibles":
-                    this.parameters.ctaInventario = "115914";
+                    this.parameters.ctaInventario = "";
                     break;
                 case "Insumos":
-                    this.parameters.ctaInventario = "115914";
+                    this.parameters.ctaInventario = "";
                     break;
                 case "Insumos librería":
                     this.parameters.ctaInventario = "42414";
@@ -245,24 +239,47 @@ namespace Entidades.Productos
         #endregion
     }
 
-
-    public class parametersProducto
+    public class AuthUp_p
     {
-        public sesion sesion { get; set; }
-        public int idEmpresa { get; set; }
-        public string codigo { get; set; }//Code
-        public string descripcion { get; set; }//Description
-        public string detalle { get; set; }//Observation
-        public string minimo { get; set; }//Minimun
-        public string ultimoPrecioCompra { get; set; }//Cost?
-        public string precioVenta { get; set; }//
-        public string ctaInventario { get; set; }//
-        public string ctaCostoVentas { get; set; }//
-        public string ctaIngresoVentas { get; set; }//
-        public string iva { get; set; } //21
-        public string tipoItem { get; set; }//"P"
-        public string unidadMedida { get; set; }//UnitMeasures
-        public string comentarioFactura { get; set; }
-        public string subCategoria { get; set; }
+        public string usuario { get; set; }
+        public string password { get; set; }
     }
+
+    public class ParametersUp_p
+    {
+        public SesionUp_p sesion { get; set; }
+        public string idEmpresa { get; set; }
+        public string idItem { get; set; }
+        public string id { get; set; }
+        public string codigo { get; set; }
+        public string descripcion { get; set; }
+        public string detalle { get; set; }
+        public string minimo { get; set; }
+        public string precioVenta { get; set; }
+        public string ctaInventario { get; set; }
+        public string ctaCostoVentas { get; set; }
+        public string ctaIngresoVentas { get; set; }
+        public string iva { get; set; }
+        public string tipoItem { get; set; }
+        public string unidadMedida { get; set; }
+        public string ultimoPrecioCompra { get; set; }
+        public string subCategoria { get; set; }
+
+    }
+
+
+
+    public class ServiceUp_p
+    {
+        public string provision { get; set; }
+        public string operacion { get; set; }
+    }
+
+    public class SesionUp_p
+    {
+        public string usuario { get; set; }
+        public string claveSesion { get; set; }
+    }
+
+
 }
