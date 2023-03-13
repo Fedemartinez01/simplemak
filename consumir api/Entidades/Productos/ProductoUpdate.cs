@@ -9,9 +9,14 @@ namespace Entidades.Productos
 
     public class ProductoUpdate
     {
+        #region Atributos
+
         public AuthUp_p auth { get; set; }
         public ServiceUp_p service { get; set; }
         public ParametersUp_p parameters { get; set; }
+        #endregion
+
+        #region Constructor
 
         public ProductoUpdate()
         {
@@ -46,199 +51,134 @@ namespace Entidades.Productos
 
              AsignarCuentas();
         }
+        #endregion
 
         #region Métodos
 
         public void AsignarCuentas()
         {
-            #region Region for ctaCostoVentas
-
-            int cuentaInventario = Convert.ToInt32(this.parameters.ctaInventario);
-            if(cuentaInventario >= 1151 && cuentaInventario <= 1157)
-            {
-                this.parameters.ctaCostoVentas = "4221";
-            }
-            else
-            {
-                this.parameters.ctaCostoVentas = "4211";
-            }
-            #endregion
             #region Region for ctaInventario
 
+            string ctaInvetario = "";
 
             switch (this.parameters.subCategoria.Trim())
             {
-                case "Electricidad":
-                    this.parameters.ctaInventario = "11591";
-                    break;
-                case "Hidráulica":
-                    this.parameters.ctaInventario = "11592";
-                    break;
-                case "Materia prima":
-                    this.parameters.ctaInventario = "11594";
-                    break;
-                case "Motores":
-                    this.parameters.ctaInventario = "11595";
-                    break;
-                case "Neumática":
-                    this.parameters.ctaInventario = "11596";
-                    break;
-                case "Rodamientos":
-                    this.parameters.ctaInventario = "115910";
-                    break;
-                case "Transmisión":
-                    this.parameters.ctaInventario = "115911";
-                    break;
-                case "Resortes":
-                    this.parameters.ctaInventario = "11598";
-                    break;
-                case "Varios":
-                    this.parameters.ctaInventario = "115912";
-                    break;
-                case "Buloneria":
-                    this.parameters.ctaInventario = "115913";
-                    break;
-                case "Repuestos importados":
-                    this.parameters.ctaInventario = "11599";
-                    break;
-                case "Conjuntos armados":
-                    this.parameters.ctaInventario = "11581";
-                    break;
-                case "Conjuntos electricidad": 
-                    this.parameters.ctaInventario = "11582";
-                    break;
-                case "Conjuntos neumática":
-                    this.parameters.ctaInventario = "11584";
-                    break;
-                case "Conjuntos motores":
-                    this.parameters.ctaInventario = "11583";
-                    break;
-                case "Conjuntos soldados":
-                    this.parameters.ctaInventario = "11585";
-                    break;
-                case "Instrumentos terminados":
-                    this.parameters.ctaInventario = "";
-                    break;
-                case "Insumos y Herramientas":
-                    this.parameters.ctaInventario = "115936";
-                    break;
-                case "Instrumentos conjuntos soldados":
-                    this.parameters.ctaInventario = "115931";
-                    break;
                 case "Instrumentos conjuntos armados":
-                    this.parameters.ctaInventario = "";
+                    ctaInvetario = "INST CONJUNTOS ARMADOS";
+                    //HAY QUE PROBAR EN PRODUCCION
                     break;
-                case "Instrumentos piezas plegadas":
-                    this.parameters.ctaInventario = "115934";
-                    break;
+
                 case "Instrumentos piezas de revolución":
-                    this.parameters.ctaInventario = "";
+                    ctaInvetario = "INST PIEZAS DE REVOLUCION";
+                    //HAY QUE PROBAR EN PRODUCCION
                     break;
+
+                case "Instrumentos terminados":
+                    ctaInvetario = "INST TERMINADOS";
+                    //HAY QUE PROBAR EN PRODUCCION
+                    break;
+
+                case "Instrumentos conjuntos soldados":
+                    ctaInvetario = "INST CONJUNTOS SOLDADOS";
+                    break;
+
+                case "Piezas varias-Piezas de fundición":
+                    ctaInvetario = "PIEZAS VARIAS FUNDICION";
+                    break;
+
                 case "Instrumentos piezas de corte":
-                    this.parameters.ctaInventario = "115932";
+                    ctaInvetario = "INSTR PIEZAS DE CORTE";
                     break;
-                case "Instrumentos piezas varias":
-                    this.parameters.ctaInventario = "115935";
-                    break;
+
                 case "Instrumentos piezas estructurales":
-                    this.parameters.ctaInventario = "115933";
+                    ctaInvetario = "INSTR PIEZAS ESTRUCTURALES";
                     break;
-                case "Insumos limpieza":
-                    this.parameters.ctaInventario = "";
+
+                case "Instrumentos piezas plegadas":
+                    ctaInvetario = "INSTR PIEZAS PLEGADAS";
                     break;
+
+                case "Instrumentos piezas varias":
+                    ctaInvetario = "INSTR PIEZAS VARIAS";
+                    break;
+
+                case "Motores":
+                    ctaInvetario = "MOTOR";
+                    break;
+
                 case "Insumos consumibles":
-                    this.parameters.ctaInventario = "";
-                    break;
-                case "Insumos":
-                    this.parameters.ctaInventario = "";
-                    break;
                 case "Insumos librería":
-                    this.parameters.ctaInventario = "42414";
-                    break;
+                case "Insumos limpieza":
                 case "Insumos tecnología y computación":
-                    this.parameters.ctaInventario = "12231"; //Tambien está 42416
+                    ctaInvetario = "INSUMOS VARIOS";
                     break;
-                case "Impresoras":
-                    this.parameters.ctaInventario = "1156";
+
+                default:
+                    ctaInvetario = this.parameters.subCategoria.ToUpper().Trim();
                     break;
-                case "Prensas":
-                    this.parameters.ctaInventario = "1157"; 
+            }
+
+            this.parameters.ctaInventario = ctaInvetario;
+
+            #endregion
+
+            #region Region for ctaCostoVentas
+
+            var cuentaInventario = this.parameters.ctaInventario;
+            switch (cuentaInventario)
+            {
+                case "APILADORES":
+                case "CORTADORAS":
+                case "ACCESORIOS":
+                case "DE CONVERSIÓN":
+                case "IMPRESORAS":
+                case "PRENSAS":
+                    this.parameters.ctaCostoVentas = "COSTO DE VENTA MAQUINAS";
                     break;
-                case "De Conversión":                 
-                    this.parameters.ctaInventario = "1155";
-                    break;
-                case "Apiladores":
-                    this.parameters.ctaInventario = "1151";
-                    break;
-                case "Accesorios":
-                    this.parameters.ctaInventario = "1154";
-                    break;
-                case "Cortadoras":
-                    this.parameters.ctaInventario = "1152";
-                    break;
-                case "Piezas corte láser":
-                    this.parameters.ctaInventario = "115971";
-                    break;
-                case "Piezas de revolución":
-                    this.parameters.ctaInventario = "115972";
-                    break;
-                case "Piezas estructurales":
-                    this.parameters.ctaInventario = "115973";
-                    break;
-                case "Piezas plegadas":
-                    this.parameters.ctaInventario = "115975";
-                    break;
-                case "Piezas varias - Piezas de fundición":
-                    this.parameters.ctaInventario = "115976";
-                    break;
-                case "Piezas fabricadas por terceros":
-                    this.parameters.ctaInventario = "115974";
+
+                default:
+                    this.parameters.ctaCostoVentas = "COMPRAS INSUMOS";
                     break;
             }
             #endregion
 
             #region Region for ctIngresoVenta
-
             var cuentaIngresoVenta = this.parameters.ctaInventario;
             switch (cuentaIngresoVenta)
             {
-                case "1151":
-                    this.parameters.ctaIngresoVentas = "4111";
+                case "APILADORES":
+                    this.parameters.ctaIngresoVentas = "VENTA DE APILADORES";
                     break;
-                case "1156":
-                    this.parameters.ctaIngresoVentas = "4112";
+                case "IMPRESORAS":
+                    this.parameters.ctaIngresoVentas = "VENTA DE IMPRESORAS";
                     break;
-                case "1152":
-                case "1153":
-                    this.parameters.ctaIngresoVentas = "4113";
+                case "CORTADORAS":
+                    this.parameters.ctaIngresoVentas = "VENTA DE CORTADORAS";
                     break;
-                case "1157":
-                    this.parameters.ctaIngresoVentas = "4114";
+                case "PRENSAS":
+                    this.parameters.ctaIngresoVentas = "VENTA DE PRENSAS";
                     break;
-                case "1155":
-                    if(this.parameters.subCategoria.ToLower().Contains("valvu"))
+                case "VALVULADORAS":
+                    if (this.parameters.subCategoria.ToLower().Contains("valvu"))
                     {
-                        this.parameters.ctaIngresoVentas = "4115";
-                    }else if(this.parameters.subCategoria.ToLower().Contains("valvu"))
-                    {
-                        this.parameters.ctaIngresoVentas = "4115";
+                        this.parameters.ctaIngresoVentas = "VENTA DE VALVULADORAS";
                     }
                     break;
-                case "1154":
-                    this.parameters.ctaIngresoVentas = "4118";
+                case "ACCESORIOS":
+                    this.parameters.ctaIngresoVentas = "VENTA DE OTRAS MAQUINARIAS";
                     break;
 
                 default:
-                    this.parameters.ctaIngresoVentas = "4121";
+                    this.parameters.ctaIngresoVentas = "VENTA DE REPUESTOS";
                     break;
             }
             #endregion
-
-
         }
 
         #endregion
     }
+
+    #region Clases de p_u
 
     public class AuthUp_p
     {
@@ -268,8 +208,6 @@ namespace Entidades.Productos
 
     }
 
-
-
     public class ServiceUp_p
     {
         public string provision { get; set; }
@@ -281,6 +219,7 @@ namespace Entidades.Productos
         public string usuario { get; set; }
         public string claveSesion { get; set; }
     }
+    #endregion
 
 
 }

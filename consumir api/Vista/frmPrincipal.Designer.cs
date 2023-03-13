@@ -58,6 +58,7 @@
             this.group2 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.btnEditarProductos = new System.Windows.Forms.Button();
+            this.checkTodos = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.group1.SuspendLayout();
             this.group2.SuspendLayout();
@@ -198,7 +199,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(24, 86);
+            this.label2.Location = new System.Drawing.Point(7, 72);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 18);
@@ -208,7 +209,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(24, 35);
+            this.label3.Location = new System.Drawing.Point(7, 21);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(53, 18);
@@ -217,18 +218,18 @@
             // 
             // txt_FechaFin
             // 
-            this.txt_FechaFin.Location = new System.Drawing.Point(94, 81);
+            this.txt_FechaFin.Location = new System.Drawing.Point(77, 67);
             this.txt_FechaFin.Margin = new System.Windows.Forms.Padding(4);
             this.txt_FechaFin.Name = "txt_FechaFin";
-            this.txt_FechaFin.Size = new System.Drawing.Size(373, 25);
+            this.txt_FechaFin.Size = new System.Drawing.Size(409, 25);
             this.txt_FechaFin.TabIndex = 16;
             // 
             // txt_FechaInicio
             // 
-            this.txt_FechaInicio.Location = new System.Drawing.Point(97, 30);
+            this.txt_FechaInicio.Location = new System.Drawing.Point(80, 16);
             this.txt_FechaInicio.Margin = new System.Windows.Forms.Padding(4);
             this.txt_FechaInicio.Name = "txt_FechaInicio";
-            this.txt_FechaInicio.Size = new System.Drawing.Size(370, 25);
+            this.txt_FechaInicio.Size = new System.Drawing.Size(406, 25);
             this.txt_FechaInicio.TabIndex = 15;
             // 
             // label1
@@ -249,15 +250,15 @@
             "Hoy",
             "Últimos 3 días",
             "Últimos 10 días"});
-            this.lbl_Fechas.Location = new System.Drawing.Point(95, 44);
+            this.lbl_Fechas.Location = new System.Drawing.Point(68, 19);
             this.lbl_Fechas.Name = "lbl_Fechas";
-            this.lbl_Fechas.Size = new System.Drawing.Size(191, 26);
+            this.lbl_Fechas.Size = new System.Drawing.Size(179, 26);
             this.lbl_Fechas.TabIndex = 20;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(25, 44);
+            this.label4.Location = new System.Drawing.Point(6, 22);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 18);
             this.label4.TabIndex = 21;
@@ -266,7 +267,7 @@
             // radio_1
             // 
             this.radio_1.AutoSize = true;
-            this.radio_1.Location = new System.Drawing.Point(22, 117);
+            this.radio_1.Location = new System.Drawing.Point(12, 106);
             this.radio_1.Name = "radio_1";
             this.radio_1.Size = new System.Drawing.Size(143, 22);
             this.radio_1.TabIndex = 24;
@@ -278,7 +279,7 @@
             // radio_2
             // 
             this.radio_2.AutoSize = true;
-            this.radio_2.Location = new System.Drawing.Point(22, 220);
+            this.radio_2.Location = new System.Drawing.Point(12, 201);
             this.radio_2.Name = "radio_2";
             this.radio_2.Size = new System.Drawing.Size(71, 22);
             this.radio_2.TabIndex = 25;
@@ -293,9 +294,9 @@
             this.group1.Controls.Add(this.txt_FechaInicio);
             this.group1.Controls.Add(this.label3);
             this.group1.Controls.Add(this.label2);
-            this.group1.Location = new System.Drawing.Point(189, 84);
+            this.group1.Location = new System.Drawing.Point(163, 65);
             this.group1.Name = "group1";
-            this.group1.Size = new System.Drawing.Size(482, 128);
+            this.group1.Size = new System.Drawing.Size(495, 108);
             this.group1.TabIndex = 26;
             this.group1.TabStop = false;
             // 
@@ -303,16 +304,16 @@
             // 
             this.group2.Controls.Add(this.lbl_Fechas);
             this.group2.Controls.Add(this.label4);
-            this.group2.Location = new System.Drawing.Point(189, 218);
+            this.group2.Location = new System.Drawing.Point(161, 179);
             this.group2.Name = "group2";
-            this.group2.Size = new System.Drawing.Size(482, 98);
+            this.group2.Size = new System.Drawing.Size(253, 58);
             this.group2.TabIndex = 27;
             this.group2.TabStop = false;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(236, 63);
+            this.label5.Location = new System.Drawing.Point(311, 44);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(368, 18);
             this.label5.TabIndex = 28;
@@ -329,6 +330,17 @@
             this.btnEditarProductos.UseVisualStyleBackColor = false;
             this.btnEditarProductos.Click += new System.EventHandler(this.btnEditarProductos_Click);
             // 
+            // checkTodos
+            // 
+            this.checkTodos.AutoSize = true;
+            this.checkTodos.Location = new System.Drawing.Point(473, 199);
+            this.checkTodos.Name = "checkTodos";
+            this.checkTodos.Size = new System.Drawing.Size(71, 22);
+            this.checkTodos.TabIndex = 25;
+            this.checkTodos.Text = "TODOS";
+            this.checkTodos.UseVisualStyleBackColor = true;
+            this.checkTodos.CheckedChanged += new System.EventHandler(this.radio_3_CheckedChanged);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -336,11 +348,12 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(683, 464);
+            this.Controls.Add(this.checkTodos);
+            this.Controls.Add(this.radio_2);
             this.Controls.Add(this.btnEditarProductos);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.group2);
             this.Controls.Add(this.group1);
-            this.Controls.Add(this.radio_2);
             this.Controls.Add(this.radio_1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCargarTodos);
@@ -356,6 +369,7 @@
             this.Name = "frmPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SIMPLEMAK";
+            this.Load += new System.EventHandler(this.frmPrincipal_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.group1.ResumeLayout(false);
             this.group1.PerformLayout();
@@ -397,5 +411,6 @@
         private GroupBox group2;
         private Label label5;
         private Button btnEditarProductos;
+        private RadioButton checkTodos;
     }
 }

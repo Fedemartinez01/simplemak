@@ -12,6 +12,9 @@ using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using Entidades.Excepciones;
 using JsonSerializer = System.Text.Json.JsonSerializer;
+using System.Reflection.Metadata;
+using System.Threading;
+using System;
 
 namespace Vista
 {
@@ -20,6 +23,8 @@ namespace Vista
         #region Atributos
 
         string url = "https://staging.colppy.com/lib/frontera2/service.php"; //URL de la api colppy
+
+        //string urlProduccion = "https://login.colppy.com/lib/frontera2/service.php";
 
         Conexion Conexion = new Conexion();
 
@@ -40,27 +45,37 @@ namespace Vista
                 usuario = "administracion@simplemak.com.ar",
                 password = "87222e72461dfe5a910ad200e54f3ace"
             }
-        }; //Creamos el objeto login
+        };
 
         string claveSesion = "null";
 
         RespuestaLogin respuestaLogin = new RespuestaLogin(); //Creamos el objeto respuestaLogin.. de acá sacamos el token
+
+        bool primerCarga = true;
+
 
         #endregion
 
         #region Constructor
         public frmPrincipal()
         {
+            //ObtenerToken(); // Obtenemos un nuevo token
+
+            Task obtenerToken = Task.Factory.StartNew(() => ObtenerToken());
+            Task.WaitAll(obtenerToken);
+            Task.Delay(2000).Wait();
+
             InitializeComponent();
 
             this.radio_2.Checked = true;
             this.lbl_Fechas.SelectedIndex = 0;
-            this.btnCargarClientes.Enabled = false;
+            //this.btnCargarClientes.Enabled = false;
             this.btnCargarTodos.Enabled = false;
             this.btnCargarProveedores.Enabled = false;
 
-            ObtenerToken(); // Obtenemos un nuevo token
 
+            Sincronizar();
+            primerCarga = false;
         }
         #endregion
 
@@ -72,7 +87,6 @@ namespace Vista
         private void btnCargarClientes_Click(object sender, EventArgs e)
         {
             BloquearInputs();
-
             #region Asignar fecha
             DateTime fechaInicio = DateTime.Today;
             DateTime fechaFin = DateTime.Now;
@@ -98,9 +112,7 @@ namespace Vista
                 fechaFin = this.txt_FechaFin.Value;
             }
             #endregion
-
             AgregarClientes(fechaInicio, fechaFin);
-            DesbloquearInpunts();
         }
         private void btnCargarProveedores_Click(object sender, EventArgs e)
         {
@@ -133,7 +145,6 @@ namespace Vista
             #endregion
 
             AgregarProveedores(fechaInicio, fechaFin);
-            DesbloquearInpunts();
         }
         private void btnCargarProductos_Click_1(object sender, EventArgs e)
         {
@@ -158,7 +169,7 @@ namespace Vista
                         break;
                 }
             }
-            else
+            else if(group2.Enabled)
             {
                 fechaInicio = this.txt_FechaInicio.Value;
                 fechaFin = this.txt_FechaFin.Value;
@@ -166,7 +177,6 @@ namespace Vista
             #endregion
 
             AgregarProductos(fechaInicio, fechaFin);
-            DesbloquearInpunts();
         }
         private void btnEditarProductos_Click(object sender, EventArgs e)
         {
@@ -199,7 +209,6 @@ namespace Vista
             #endregion
 
             EditarProductos(fechaInicio, fechaFin);
-            DesbloquearInpunts();
         }
         #endregion
 
@@ -209,43 +218,68 @@ namespace Vista
         {
             try
             {
-                #region Formatear fecha
-                string fechaInicioSQL = $"{fechaInicio.Year}-{fechaInicio.Month}-{fechaInicio.Day}";
-
-                string fechaFinSql = $"{fechaFin.Year}-{fechaFin.Month}-{fechaFin.Day} 23:59:59";
-
-                #endregion
+                if (claveSesion == "null")
+                    throw new ExceptionColppy();
 
                 List<Producto> productos = new List<Producto>();
 
-                productos = Conexion.LeerProductos(fechaInicioSQL, fechaFinSql);
+                frmLeyendoBaseDeDatos frmLeyendoBBDD = new frmLeyendoBaseDeDatos();
+                frmLeyendoBBDD.Show();
 
-                if (claveSesion == "null") 
-                    throw new ExceptionColppy();
+                if (primerCarga)
+                {
+                    productos = Conexion.LeerTodosProductos();
+                    //ObtenerToken();
+                }
+                else
+                {
+                    if(this.checkTodos.Checked)
+                    {
+                        productos = Conexion.LeerTodosProductos();
+                    }
+                    else
+                    {
+                        #region Formatear fecha
+                    string fechaInicioSQL = $"{fechaInicio.Year}-{fechaInicio.Month}-{fechaInicio.Day}";
 
-                frm_Cargando pantallaCarga = new frm_Cargando(productos.Count);
-                pantallaCarga.Show();
+                    string fechaFinSql = $"{fechaFin.Year}-{fechaFin.Month}-{fechaFin.Day} 23:59:59";
+
+                        #endregion
+
+                        productos = Conexion.LeerProductos(fechaInicioSQL, fechaFinSql);
+                    }
+
+                    if (productos is null)
+                        throw new ExceptionEntidadNull();
+                    
+                }
+
+                frm_Cargando frm_Cargando = new frm_Cargando(productos.Count, this);
+                frmLeyendoBBDD.Close();
+                frm_Cargando.Show();
+                frm_Cargando.Cancel = true;
 
                 var cantProductosAgregados = 0;
+                var cantProductosNoAgregados = 0;
 
                 #region Carga
+
                 if (productos.Count > 0)
                 {
                     string idProductoColppy;
 
                     foreach (var producto in productos)
                     {
-                        if(pantallaCarga.Cancel is false)
+                        if (frm_Cargando.Cancel is true)
                         {
-                            producto.parameters.sesion.claveSesion = claveSesion; 
+                            producto.parameters.sesion.claveSesion = claveSesion;
                             using (var httpClient = new HttpClient())
                             {
-                                var response = await httpClient.PostAsJsonAsync(url, producto); 
+                                var response = await httpClient.PostAsJsonAsync(url, producto);
 
                                 if (response.IsSuccessStatusCode)
                                 {
                                     var rtaString = await response.Content.ReadAsStringAsync();
-
 
                                     if (rtaString.Contains("\"message\": \"La operación se realizó con éxito.\"") || rtaString.Contains("\"message\":\"La operaci\\u00f3n se realiz\\u00f3 con \\u00e9xito.\""))
                                     {
@@ -257,6 +291,10 @@ namespace Vista
 
                                         Conexion.CambiarEstadoColppy(producto.parameters.codigo, idProductoColppy);
                                     }
+                                    else //SOLO PARA CONTROLAR 
+                                    {
+                                        cantProductosNoAgregados++;
+                                    }
                                 }
                                 else
                                 {
@@ -264,25 +302,30 @@ namespace Vista
                                 }
                             }
                         }
-
+                        else
+                        {
+                            break;
+                        }
                     }
                 }
                 #endregion
+               
+                frm_Cargando.Close();
 
+                MessageBox.Show($"CARGA DE PRODUCTOS FINALZADA\nPRODUCTOS NUEVOS AGREGADOS: {cantProductosAgregados}\nNO AGREGADOS: {cantProductosNoAgregados}");
 
-                    MessageBox.Show($"CARGA DE PRODUCTOS FINALZADA\nPRODUCTOS NUEVOS AGREGADOS: {cantProductosAgregados}");
-                
-                pantallaCarga.Close();
+                DesbloquearInputs();
 
             }
-            catch(ExceptionColppy)
+            catch (ExceptionColppy)
             {
                 MessageBox.Show($"Colppy no se encuentra disponible", "No se ha podido realizar la carga", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception)
-             {
+            {
                 MessageBox.Show($"Hubo un error en carga de datos", "No se ha podido realizar la carga", MessageBoxButtons.OK, MessageBoxIcon.Error);
-             }
+            }
+            
 
         }
         private async void AgregarProveedores(DateTime fechaInicio, DateTime fechaFin)
@@ -296,14 +339,18 @@ namespace Vista
 
                 #endregion
 
+                frmLeyendoBaseDeDatos frmLeyendoBBDD = new frmLeyendoBaseDeDatos();
+                frmLeyendoBBDD.Show();
+
                 List<Proveedor> proveedores = new List<Proveedor>();
                 proveedores = Conexion.LeerProveedores(fechaInicioSQL, fechaFinSql);
 
                 if (claveSesion == "null") //Validamos que se haya generado el token
                     throw new Exception();
 
-                frm_Cargando pantallaCarga = new frm_Cargando(proveedores.Count);
-                pantallaCarga.Show();
+                frm_Cargando frm_Cargando = new frm_Cargando(proveedores.Count);
+                frmLeyendoBBDD.Close();
+                frm_Cargando.Show();
 
                 var cantProveedoresAgregados = 0;
 
@@ -337,7 +384,7 @@ namespace Vista
                     }             
                         MessageBox.Show("CARGA DE PROVEEDORES FINALZADA\nPROVEEDORES NUEVOS AGREGADOS: " + cantProveedoresAgregados);
                 }
-                pantallaCarga.Close();
+                frm_Cargando.Close();
             }
             catch (Exception ex)
             {
@@ -349,6 +396,8 @@ namespace Vista
         {
             try
             {
+                if (claveSesion == "null") //Validamos que se haya generado el token
+                    throw new Exception();
 
                 #region Convertir a formato fecha SQL
                 string fechaInicioSQL = $"{fechaInicio.Year}-{fechaInicio.Month}-{fechaInicio.Day}";
@@ -357,15 +406,15 @@ namespace Vista
 
                 #endregion
 
+                frmLeyendoBaseDeDatos frmLeyendoBBDD = new frmLeyendoBaseDeDatos();
+                frmLeyendoBBDD.Show();
+
                 List<Cliente> clientes = new List<Cliente>();
                 clientes = Conexion.LeerClientes(fechaInicioSQL, fechaFinSql);
 
-                if (claveSesion == "null") //Validamos que se haya generado el token
-                    throw new Exception();
-
-
-                frm_Cargando pantallaCarga = new frm_Cargando(clientes.Count);
-                pantallaCarga.Show();
+                frm_Cargando frm_Cargando = new frm_Cargando(clientes.Count);
+                frmLeyendoBBDD.Close();
+                frm_Cargando.Show();
 
                 var cantClientesAgregados = 0;
 
@@ -399,7 +448,7 @@ namespace Vista
                     }
                         MessageBox.Show("CARGA DE CLIENTES FINALZADA\nCLIENTES NUEVOS AGREGADOS: " + cantClientesAgregados);
                 }
-                pantallaCarga.Close();
+                frm_Cargando.Close();
             }
             catch (Exception ex)
             {
@@ -418,26 +467,37 @@ namespace Vista
 
                 #endregion
 
-                List<ProductoUpdate> productosUpdate = new List<ProductoUpdate>();
+                #region Leer Base de datos
 
+                frmLeyendoBaseDeDatos frmLeyendoBBDD = new frmLeyendoBaseDeDatos();
+                frmLeyendoBBDD.Show();
+
+                List<ProductoUpdate> productosUpdate = new List<ProductoUpdate>();
                 productosUpdate = Conexion.LeerProductosUpdate(fechaInicioSQL, fechaFinSql);
+
+                #region Validamos excepciones
 
                 if (claveSesion == "null") //Validamos que se haya generado el token
                     throw new ExceptionColppy();
 
-                frm_Cargando pantallaCarga = new frm_Cargando(productosUpdate.Count);
-                pantallaCarga.Show();
+                if (productosUpdate is null)
+                    throw new ExceptionEntidadNull();
+                #endregion
+
+                frm_Cargando frm_Cargando = new frm_Cargando(productosUpdate.Count);
+                frmLeyendoBBDD.Close();
+                frm_Cargando.Show();
+                #endregion
 
                 var cantProductosActualizados = 0;
-
+                var cantProductosNoActualizados = 0;
 
                 #region Update
                 if (productosUpdate.Count > 0)
                 {
                     foreach (var producto in productosUpdate)
                     {
-
-                        if(pantallaCarga.Cancel is true)
+                        if (frm_Cargando.Cancel is true)
                         {
                             producto.parameters.sesion.claveSesion = claveSesion;
                             using (var httpClient = new HttpClient())
@@ -454,7 +514,7 @@ namespace Vista
                                     }
                                     else
                                     {
-                                        Console.WriteLine(2);
+                                        cantProductosNoActualizados++;
                                     }
                                 }
                                 else
@@ -467,14 +527,18 @@ namespace Vista
                 }
                 #endregion
 
-                MessageBox.Show($"ACTUALIZACION DE PRODUCTOS FINALZADA\nPRODUCTOS ACTUALIZADOS: {cantProductosActualizados}");
+                MessageBox.Show($"ACTUALIZACION DE PRODUCTOS FINALZADA\nPRODUCTOS ACTUALIZADOS: {cantProductosActualizados}\nNO ACTUALIZADOS: {cantProductosNoActualizados}");
 
-                pantallaCarga.Close();
-
+                frm_Cargando.Close();
+                DesbloquearInputs();
             }
             catch (ExceptionColppy)
             {
                 MessageBox.Show($"Colppy no se encuentra disponible", "No se ha podido realizar la carga", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch(ExceptionEntidadNull)
+            {
+                MessageBox.Show($"No se ha podido traer la informacion", "No se ha podido realizar la carga", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception)
             {
@@ -497,6 +561,7 @@ namespace Vista
 
                         if (respuestaLogin != null)
                             claveSesion = respuestaLogin.response.data.claveSesion;
+                        
                     }
                     catch (Exception ex)
                     {
@@ -507,27 +572,37 @@ namespace Vista
                 {
                     Console.WriteLine("Error");
                 }
+
+                
             }
+        }
+        public void Sincronizar()
+        {
+            AgregarProductos(DateTime.Now, DateTime.Now);
+            //AgregarProveedores(DateTime.Now, DateTime.Now);
+            //AgregarClientes(DateTime.Now, DateTime.Now);        
         }
 
         #endregion
 
         #region Bloquear labels
 
-        private void BloquearInputs()
+        public void BloquearInputs()
         {
             this.btnCargarClientes.Enabled = false;
             this.btnCargarProductos.Enabled = false;
             this.btnCargarProveedores.Enabled = false;
+            this.btnEditarProductos.Enabled = false;
             this.btnCargarTodos.Enabled = false;
 
             this.txt_FechaFin.Enabled = false;
             this.txt_FechaInicio.Enabled = false;
         }
-        private void DesbloquearInpunts()
+        public void DesbloquearInputs()
         {
             //this.btnCargarClientes.Enabled = true;
             this.btnCargarProductos.Enabled = true;
+            this.btnEditarProductos.Enabled = true;
             //this.btnCargarProveedores.Enabled = true;
             //this.btnCargarTodos.Enabled = true;
             this.txt_FechaFin.Enabled = true;
@@ -535,16 +610,25 @@ namespace Vista
         }
         private void radio_1_CheckedChanged(object sender, EventArgs e)
         {
-            group2.Enabled = false;
             group1.Enabled = true;
+            group2.Enabled = false;
         }
         private void radio_2_CheckedChanged(object sender, EventArgs e)
         {
             group1.Enabled = false;
             group2.Enabled = true;
         }
-        #endregion
+        private void radio_3_CheckedChanged(object sender, EventArgs e)
+        {
+            group1.Enabled = false;
+            group2.Enabled = false;
+        }
+        private void frmPrincipal_Load(object sender, EventArgs e)
+        {
+            BloquearInputs();
+        }
 
+        #endregion
 
     }
     

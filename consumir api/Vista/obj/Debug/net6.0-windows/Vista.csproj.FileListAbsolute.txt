@@ -97,3 +97,4 @@ C:\Users\Federico\Desktop\Simplemak\Integracion colppy\consumir api\Vista\bin\De
 C:\Users\Federico\Desktop\Simplemak\Integracion colppy\consumir api\Vista\bin\Debug\net6.0-windows\System.Security.Cryptography.Pkcs.dll
 C:\Users\Federico\Desktop\Simplemak\Integracion colppy\consumir api\Vista\bin\Debug\net6.0-windows\System.Security.Cryptography.Xml.dll
 C:\Users\Federico\Desktop\Simplemak\Integracion colppy\consumir api\Vista\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Federico\Desktop\Simplemak\Integracion colppy\consumir api\Vista\obj\Debug\net6.0-windows\Vista.frmLeyendoBaseDeDatos.resources

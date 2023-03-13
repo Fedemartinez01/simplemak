@@ -23,6 +23,49 @@ namespace Entidades
 
         #region Productos
 
+        public List<Producto> LeerTodosProductos()
+        {
+            List<Producto> productos = new List<Producto>();
+
+            try
+            {
+                sqlConnection.Open();
+
+                SqlCommand cmd = new SqlCommand("spLeerTodosProductosColppy", sqlConnection);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                using (SqlDataReader dataReader = cmd.ExecuteReader())
+                {
+                    while (dataReader.Read())
+                    {
+                        string codigo = dataReader["Code"].ToString();
+                        string descripcion = dataReader["Description"].ToString();
+                        string subCatergoria = dataReader["Subcategoria"].ToString();
+
+                        try
+                        {
+                            Producto producto = new Producto(codigo, descripcion, subCatergoria);
+                            productos.Add(producto);
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Error: {ex.Message}");
+                        }
+
+                    }
+                }
+                return productos;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+        }
         public List<Producto> LeerProductos(string fechaInicio, string fechaFin)
         {
             List<Producto> productos = new List<Producto>();
@@ -175,9 +218,9 @@ namespace Entidades
                     while (dataReader.Read())
                     {
                         string isActive = "0";
-                        string TipoDocumento = dataReader["Description"].ToString();
+                        string TipoDocumento = dataReader["DocumentType"].ToString();
                         string NumeroDocumento = dataReader["DocumentNumber"].ToString();
-                        string Pais = dataReader["Denomination"].ToString();
+                        string Pais = dataReader["CountryName"].ToString();
                         string IsOnColppy = dataReader["IsOnColppy"].ToString();
 
                         if (dataReader["IsActive"].ToString() == "True")
@@ -195,10 +238,12 @@ namespace Entidades
                             dataReader["Address"].ToString(),
                             dataReader["Name"].ToString(),
                             dataReader["PostalCode"].ToString(),
-                            dataReader["Name"].ToString(),
+                            dataReader["CityName"].ToString(),
                             Pais,
                             dataReader["CellPhoneNumber"].ToString(),
                             dataReader["Email"].ToString(),
+                            //dataReader["CreatedOn"].ToString(),
+                            //dataReader["CountryId"].ToString(),
                             isActive,
                            string.Empty
                              );

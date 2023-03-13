@@ -4,6 +4,9 @@
     <Compile Update="Cargando.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="frmLeyendoBaseDeDatos.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="frmPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>

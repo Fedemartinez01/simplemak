@@ -84,10 +84,7 @@ namespace Entidades.Clientes
 
         #region Métodos
 
-        /// <summary>
-        /// Lee si el cliente está dado de alta en Colppy, si está hace un editar_cliente si no está hace un alta_cliente
-        /// </summary>
-        /// <param name="IsOnColppy"></param>
+
         public void DefinirOperacionAltaOEditar(string IsOnColppy)
         {
             if (IsOnColppy == "1")
@@ -99,11 +96,7 @@ namespace Entidades.Clientes
                 this.service.operacion = "editar_cliente";
             }
         }
-        /// <summary>
-        /// Lee si el cliente tiene asignado un documento tipo DNI u otro.. si es dni lo guarda en el dni, si es otro lo guarda en CUIT
-        /// </summary>
-        /// <param name="tipoDni"></param>
-        /// <param name="numeroDni"></param>
+
         public void AsignarDocumentNumber(string tipoDni, string numeroDni)
         {
             if(tipoDni == "DNI")
