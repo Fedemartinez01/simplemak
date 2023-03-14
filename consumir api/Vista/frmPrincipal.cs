@@ -87,6 +87,7 @@ namespace Vista
         private void btnCargarClientes_Click(object sender, EventArgs e)
         {
             BloquearInputs();
+
             #region Asignar fecha
             DateTime fechaInicio = DateTime.Today;
             DateTime fechaFin = DateTime.Now;
@@ -106,12 +107,13 @@ namespace Vista
                         break;
                 }
             }
-            else
+            else if (group1.Enabled)
             {
                 fechaInicio = this.txt_FechaInicio.Value;
                 fechaFin = this.txt_FechaFin.Value;
             }
             #endregion
+
             AgregarClientes(fechaInicio, fechaFin);
         }
         private void btnCargarProveedores_Click(object sender, EventArgs e)
@@ -137,7 +139,7 @@ namespace Vista
                         break;
                 }
             }
-            else
+            else if (group1.Enabled)
             {
                 fechaInicio = this.txt_FechaInicio.Value;
                 fechaFin = this.txt_FechaFin.Value;
@@ -169,7 +171,7 @@ namespace Vista
                         break;
                 }
             }
-            else if(group2.Enabled)
+            else if (group1.Enabled)
             {
                 fechaInicio = this.txt_FechaInicio.Value;
                 fechaFin = this.txt_FechaFin.Value;
@@ -201,7 +203,7 @@ namespace Vista
                         break;
                 }
             }
-            else
+            else if(group1.Enabled)
             {
                 fechaInicio = this.txt_FechaInicio.Value;
                 fechaFin = this.txt_FechaFin.Value;
@@ -460,20 +462,26 @@ namespace Vista
         {
             try
             {
-                #region Formatear fecha
+                frmLeyendoBaseDeDatos frmLeyendoBBDD = new frmLeyendoBaseDeDatos();
+                frmLeyendoBBDD.Show();
+
+                List<ProductoUpdate> productosUpdate = new List<ProductoUpdate>();
+
+                if(!this.checkTodos.Checked)
+                {
+                    #region Formatear fecha
                 string fechaInicioSQL = $"{fechaInicio.Year}-{fechaInicio.Month}-{fechaInicio.Day}";
 
                 string fechaFinSql = $"{fechaFin.Year}-{fechaFin.Month}-{fechaFin.Day} 23:59:59";
 
                 #endregion
 
-                #region Leer Base de datos
-
-                frmLeyendoBaseDeDatos frmLeyendoBBDD = new frmLeyendoBaseDeDatos();
-                frmLeyendoBBDD.Show();
-
-                List<ProductoUpdate> productosUpdate = new List<ProductoUpdate>();
-                productosUpdate = Conexion.LeerProductosUpdate(fechaInicioSQL, fechaFinSql);
+                    productosUpdate = Conexion.LeerProductosUpdate(fechaInicioSQL, fechaFinSql);
+                }
+                else
+                {
+                    productosUpdate = Conexion.LeerTodosProductosUpdate();
+                }
 
                 #region Validamos excepciones
 
@@ -487,7 +495,6 @@ namespace Vista
                 frm_Cargando frm_Cargando = new frm_Cargando(productosUpdate.Count);
                 frmLeyendoBBDD.Close();
                 frm_Cargando.Show();
-                #endregion
 
                 var cantProductosActualizados = 0;
                 var cantProductosNoActualizados = 0;

@@ -20,7 +20,6 @@ namespace Entidades
 
         }
 
-
         #region Productos
 
         public List<Producto> LeerTodosProductos()
@@ -127,6 +126,50 @@ namespace Entidades
                 cmd.Parameters.AddWithValue("@FechaInicio", fechaInicio);
                 cmd.Parameters.AddWithValue("@FechaFin", fechaFin);
 
+
+                using (SqlDataReader dataReader = cmd.ExecuteReader())
+                {
+                    while (dataReader.Read())
+                    {
+                        string codigo = dataReader["Code"].ToString();
+                        string descripcion = dataReader["Description"].ToString();
+                        string subCatergoria = dataReader["Subcategoria"].ToString();
+                        string idColppy = dataReader["IsOnColppy"].ToString();
+
+                        try
+                        {
+                            ProductoUpdate productoUpdate = new ProductoUpdate(codigo, descripcion, subCatergoria, idColppy);
+                            productos.Add(productoUpdate);
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Error: {ex.Message}");
+                        }
+
+                    }
+                }
+                return productos;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+        }
+        public List<ProductoUpdate> LeerTodosProductosUpdate()
+        {
+            List<ProductoUpdate> productos = new List<ProductoUpdate>();
+
+            try
+            {
+                sqlConnection.Open();
+
+                SqlCommand cmd = new SqlCommand("sp_LeerTodosProductsUpdate", sqlConnection);
+                cmd.CommandType = CommandType.StoredProcedure;
 
                 using (SqlDataReader dataReader = cmd.ExecuteReader())
                 {
